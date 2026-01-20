@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HALLAYM SCI-Journal</title>
+  <meta name="description" content="HALLAYM SCI-Journal — Multidisciplinary open-access ilmiy jurnal. Current issue, archives, submission va rasmiy jurnal siyosatlari." />
+
+  <link rel="icon" href="data:," />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .shadow-soft { box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+    .ring-soft { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+    .card-hover { transform: translateY(0); transition: transform .18s ease, box-shadow .18s ease; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 22px 55px rgba(0,0,0,.35); }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <!-- Background glow -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-20 blur-3xl bg-indigo-500"></div>
+    <div class="absolute top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-10 blur-3xl bg-cyan-400"></div>
+    <div class="absolute bottom-[-260px] right-[-220px] w-[820px] h-[820px] rounded-full opacity-10 blur-3xl bg-fuchsia-500"></div>
+  </div>
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 border-b border-slate-800/70 bg-slate-950/70 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <a href="/" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft"></span>
+        <div class="leading-tight">
+          <div class="font-bold tracking-tight" id="journalTitle">HALLAYM SCI-Journal</div>
+          <div class="text-xs text-slate-300 -mt-0.5" id="journalScope">Multidisciplinary Open Access</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-1 text-sm">
+        <a href="/" class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">Home</a>
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Submit</a>
+        <div class="relative group">
+          <button class="px-3 py-2 rounded-xl hover:bg-slate-900/60 inline-flex items-center gap-2">
+            Journal <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+          </button>
+          <div class="hidden group-hover:block absolute right-0 mt-2 w-64 p-2 rounded-2xl bg-slate-950/95 border border-slate-800 shadow-soft">
+            <a class="block px-3 py-2 rounded-xl hover:bg-slate-900/60" href="/about.html">About</a>
+            <a class="block px-3 py-2 rounded-xl hover:bg-slate-900/60" href="/editorial-board.html">Editorial Board</a>
+            <a class="block px-3 py-2 rounded-xl hover:bg-slate-900/60" href="/author-guidelines.html">Author Guidelines</a>
+            <a class="block px-3 py-2 rounded-xl hover:bg-slate-900/60" href="/publication-ethics.html">Publication Ethics</a>
+            <a class="block px-3 py-2 rounded-xl hover:bg-slate-900/60" href="/contact.html">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <a href="/submit.html" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold">
+          Submit Manuscript
+        </a>
+        <button id="btnMenu" class="md:hidden w-10 h-10 grid place-items-center rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" aria-label="Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/70 bg-slate-950/60 glass">
+      <div class="max-w-6xl mx-auto px-4 py-3 grid gap-2 text-sm">
+        <a href="/" class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft">Home</a>
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Submit</a>
+        <div class="grid grid-cols-2 gap-2">
+          <a href="/about.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">About</a>
+          <a href="/editorial-board.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Editorial</a>
+          <a href="/author-guidelines.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Guidelines</a>
+          <a href="/publication-ethics.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Ethics</a>
+          <a href="/contact.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Contact</a>
+          <a href="/admin.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Admin</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-8">
+    <div class="grid lg:grid-cols-12 gap-6 items-stretch">
+      <div class="lg:col-span-7 p-5 md:p-7 rounded-3xl bg-gradient-to-br from-slate-900/80 to-slate-950/60 border border-slate-800/70 shadow-soft">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft text-sm text-slate-200">
+          <i class="fa-solid fa-sparkles text-indigo-300"></i>
+          <span>Open Access · Multidisciplinary · Peer-review workflow</span>
+        </div>
+
+        <h1 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight">
+          HALLAYM SCI-Journal
+        </h1>
+
+        <p class="mt-3 text-slate-300 text-base md:text-lg leading-relaxed">
+          Multidisciplinary ilmiy jurnal: research article, review, short communication va amaliy tadqiqotlar.
+          ISSN (Online): <span class="font-semibold" id="issnOnline">Pending</span>.
+        </p>
+
+        <div class="mt-5 flex flex-col sm:flex-row gap-2">
+          <a href="/current-issue.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-semibold">
+            <i class="fa-solid fa-layer-group"></i>
+            Current Issue
+          </a>
+          <a href="/archives.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+            <i class="fa-solid fa-box-archive"></i>
+            Archives
+          </a>
+        </div>
+
+        <!-- Search -->
+        <div class="mt-6 p-3 rounded-2xl bg-slate-950/60 ring-soft">
+          <div class="flex flex-col sm:flex-row gap-2">
+            <div class="flex-1 relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input id="q" class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                     placeholder="Qidiruv: title, author, keyword..." />
+            </div>
+            <button id="btnSearch" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold">
+              Search
+            </button>
+          </div>
+
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="research">#research</button>
+            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="review">#review</button>
+            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="education">#education</button>
+            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="technology">#technology</button>
+            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="economics">#economics</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current issue card -->
+      <div class="lg:col-span-5 p-5 md:p-6 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-slate-300">Current Issue</div>
+          <a href="/current-issue.html" class="text-sm text-indigo-300 hover:text-indigo-200">Open</a>
+        </div>
+
+        <div id="currentIssue" class="mt-3">
+          <div class="animate-pulse">
+            <div class="h-28 rounded-2xl bg-slate-800/70"></div>
+            <div class="mt-3 h-5 rounded bg-slate-800/70 w-3/4"></div>
+            <div class="mt-2 h-4 rounded bg-slate-800/70 w-full"></div>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-3 gap-2 text-xs text-slate-300">
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-semibold text-slate-100" id="statArticles">—</div>
+            <div class="mt-0.5">Articles</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-semibold text-slate-100" id="statIssues">—</div>
+            <div class="mt-0.5">Issues</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-semibold text-slate-100" id="statViews">—</div>
+            <div class="mt-0.5">Views</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest articles -->
+  <section class="max-w-6xl mx-auto px-4 pb-12">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Latest articles</h2>
+        <p class="text-slate-300 mt-1">Eng yangi nashrlar va ilmiy maqolalar.</p>
+      </div>
+      <a href="/articles.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+        <span>All articles</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div id="latestGrid" class="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <div id="emptyState" class="hidden mt-6 p-5 rounded-2xl bg-slate-900/60 ring-soft text-slate-300">
+      Hozircha maqolalar topilmadi. Admin paneldan maqola qo‘shing yoki submission yuboring.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/70 bg-slate-950/60 glass">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft"></span>
+          <div>
+            <div class="font-bold" id="footerTitle">HALLAYM SCI-Journal</div>
+            <div class="text-xs text-slate-300" id="footerPublisher">Publisher: Hallaym</div>
+          </div>
+        </div>
+        <p class="mt-3 text-sm text-slate-300 leading-relaxed">
+          Scope: <span class="font-semibold">Multidisciplinary</span>. Open Access.
+          ISSN (Online): <span class="font-semibold" id="footerIssn">Pending</span>.
+        </p>
+      </div>
+
+      <div class="text-sm">
+        <div class="font-semibold">Journal</div>
+        <div class="mt-3 grid gap-2 text-slate-300">
+          <a class="hover:text-slate-100" href="/current-issue.html">Current Issue</a>
+          <a class="hover:text-slate-100" href="/archives.html">Archives</a>
+          <a class="hover:text-slate-100" href="/author-guidelines.html">Author Guidelines</a>
+          <a class="hover:text-slate-100" href="/publication-ethics.html">Publication Ethics</a>
+        </div>
+      </div>
+
+      <div class="text-sm">
+        <div class="font-semibold">Contact</div>
+        <div class="mt-3 grid gap-2 text-slate-300">
+          <div><i class="fa-solid fa-envelope mr-2 text-slate-400"></i><span id="contactEmail">admin@hallaym.site</span></div>
+          <div><i class="fa-solid fa-globe mr-2 text-slate-400"></i><span id="country">Uzbekistan</span></div>
+          <a class="hover:text-slate-100" href="/contact.html"><i class="fa-solid fa-paper-plane mr-2 text-slate-400"></i>Contact form</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 pb-8 text-xs text-slate-400">
+      © <span id="year"></span> HALLAYM SCI-Journal. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    function qs(name) {
+      const u = new URL(window.location.href);
+      return u.searchParams.get(name) || '';
+    }
+    function setQs(params) {
+      const u = new URL(window.location.href);
+      Object.keys(params).forEach(k => {
+        if (params[k] === '' || params[k] == null) u.searchParams.delete(k);
+        else u.searchParams.set(k, params[k]);
+      });
+      window.location.href = u.toString();
+    }
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+    function fmtDate(d) {
+      try { return new Date(d).toLocaleDateString('uz-UZ', { year:'numeric', month:'short', day:'2-digit' }); }
+      catch { return ''; }
+    }
+    function articleHref(slug) {
+      return `/article.html?slug=${encodeURIComponent(slug)}`;
+    }
+
+    function articleCard(a) {
+      const cover = a.coverImage || a.coverUrl;
+      const coverHtml = cover
+        ? `<img src="${escapeHtml(cover)}" alt="" class="w-full h-44 object-cover rounded-2xl border border-slate-800/70" loading="lazy">`
+        : `<div class="w-full h-44 rounded-2xl bg-slate-800/50 border border-slate-800/70 grid place-items-center text-slate-400"><i class="fa-regular fa-image text-2xl"></i></div>`;
+
+      const tags = (a.keywords || a.tags || []).slice(0, 3).map(t =>
+        `<a href="/articles.html?q=${encodeURIComponent(String(t))}" class="px-2.5 py-1 rounded-full bg-slate-950/60 ring-soft text-xs text-slate-200 hover:bg-slate-900">#${escapeHtml(t)}</a>`
+      ).join('');
+
+      return `
+        <a href="${articleHref(a.slug)}" class="block p-4 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft card-hover">
+          ${coverHtml}
+          <div class="mt-4">
+            <div class="flex items-center justify-between gap-3 text-xs text-slate-400">
+              <span><i class="fa-regular fa-calendar mr-1"></i>${fmtDate(a.publishedAt || a.publicationDate || a.createdAt)}</span>
+              <span><i class="fa-regular fa-eye mr-1"></i>${a.views ?? 0}</span>
+            </div>
+            <h3 class="mt-2 font-bold text-lg leading-snug">${escapeHtml(a.title)}</h3>
+            <p class="mt-1 text-sm text-slate-300 line-clamp-2">${escapeHtml(a.abstract || a.excerpt || '')}</p>
+            <div class="mt-3 flex flex-wrap gap-2">${tags}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    function issueCard(issue) {
+      const title = issue.title || `Volume ${issue.volume}, Issue ${issue.number} (${issue.year})`;
+      const status = issue.status === 'published' ? 'Published' : 'Draft';
+      return `
+        <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
+          <div class="text-xs text-slate-400">${status}</div>
+          <div class="mt-1 font-bold text-lg">${escapeHtml(title)}</div>
+          <div class="mt-1 text-sm text-slate-300 line-clamp-2">${escapeHtml(issue.description || '')}</div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+            <span>Vol. ${issue.volume} · No. ${issue.number} · ${issue.year}</span>
+            <a class="text-indigo-300 hover:text-indigo-200" href="/issue.html?id=${encodeURIComponent(issue._id)}">Open</a>
+          </div>
+        </div>
+      `;
+    }
+
+    async function load() {
+      // settings
+      try {
+        const s = await fetch('/api/journal/settings').then(r => r.json());
+        if (s?.journalTitle) {
+          $('journalTitle').textContent = s.journalTitle;
+          $('footerTitle').textContent = s.journalTitle;
+        }
+        if (s?.issnOnline) {
+          $('issnOnline').textContent = s.issnOnline;
+          $('footerIssn').textContent = s.issnOnline;
+        }
+        if (s?.scope) $('journalScope').textContent = `${s.scope} Open Access`;
+        if (s?.publisher) $('footerPublisher').textContent = `Publisher: ${s.publisher}`;
+        if (s?.contactEmail) $('contactEmail').textContent = s.contactEmail;
+        if (s?.country) $('country').textContent = s.country;
+        // scope shown above
+      } catch {}
+
+      // current issue
+      let currentIssue = null;
+      try {
+        currentIssue = await fetch('/api/issues/current').then(r => r.ok ? r.json() : null);
+      } catch {}
+      if (currentIssue && currentIssue._id) {
+        $('currentIssue').innerHTML = issueCard(currentIssue);
+      } else {
+        $('currentIssue').innerHTML = `
+          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft text-slate-300">
+            Hozircha published issue yo‘q. Admin paneldan Issue yarating va publish qiling.
+          </div>
+        `;
+      }
+
+      // latest articles
+      const q = qs('q');
+      $('q').value = q;
+      let list = [];
+      try {
+        const u = new URL('/api/articles', window.location.origin);
+        if (q) u.searchParams.set('q', q);
+        list = await fetch(u.toString()).then(r => r.json());
+        if (!Array.isArray(list)) list = [];
+      } catch { list = []; }
+
+      // stats
+      $('statArticles').textContent = String(list.length || 0);
+      $('statIssues').textContent = currentIssue ? '1+' : '0';
+      let totalViews = 0;
+      list.forEach(a => totalViews += Number(a.views || 0));
+      $('statViews').textContent = String(totalViews || 0);
+
+      if (!list.length) {
+        $('latestGrid').innerHTML = '';
+        $('emptyState').classList.remove('hidden');
+      } else {
+        $('emptyState').classList.add('hidden');
+        $('latestGrid').innerHTML = list.slice(0, 9).map(articleCard).join('');
+      }
+    }
+
+    // events
+    document.getElementById('btnMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+    document.getElementById('btnSearch').addEventListener('click', () => setQs({ q: document.getElementById('q').value.trim() }));
+    document.getElementById('q').addEventListener('keydown', (e) => { if (e.key === 'Enter') setQs({ q: document.getElementById('q').value.trim() }); });
+    document.querySelectorAll('.tagBtn').forEach(btn => btn.addEventListener('click', () => setQs({ q: btn.dataset.tag || '' })));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue | HALLAYM SCI-Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-blue-700"><i class="fa-solid fa-journal-whills mr-2"></i>HALLAYM SCI-Journal</a>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="current-issue.html">Current Issue</a>
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="archives.html">Archives</a>
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="articles.html">Articles</a>
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="submit.html">Submit</a>
+      </nav>
+      <a href="login.html" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Login</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div id="issue" class="bg-white rounded-xl border p-5"></div>
+    <h2 class="mt-8 text-xl font-bold">Table of Contents</h2>
+    <div id="toc" class="mt-4 grid md:grid-cols-2 gap-4"></div>
+  </main>
+
+  <footer class="border-t bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-gray-600">Copyright 2026 HALLAYM SCI-Journal</div>
+  </footer>
+
+  <script>
+    function esc(s){return String(s||'').replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
+    function label(i){return `Volume ${i.volume}, Issue ${i.number} (${i.year})`;}
+    function getId(){return new URLSearchParams(location.search).get('id');}
+    async function load(){
+      const id=getId();
+      const box=document.getElementById('issue');
+      const toc=document.getElementById('toc');
+      if(!id){location.href='archives.html';return;}
+      box.innerHTML='<div class="text-gray-600">Loading...</div>';
+      try{
+        const r=await fetch(`/api/issues/${encodeURIComponent(id)}/articles`);
+        if(!r.ok) throw new Error('not found');
+        const data=await r.json();
+        const issue=data.issue;
+        const articles=data.articles||[];
+        document.title = `${label(issue)} | HALLAYM SCI-Journal`;
+        box.innerHTML=`<div class="flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <div class="text-sm text-gray-500">${esc(label(issue))}</div>
+            <h1 class="mt-1 text-2xl font-bold">${esc(issue.title||'Issue')}</h1>
+            <p class="mt-2 text-gray-700">${esc(issue.description||'')}</p>
+          </div>
+        </div>`;
+        if(!articles.length){toc.innerHTML='<div class="text-gray-700">No articles in this issue yet.</div>';return;}
+        toc.innerHTML=articles.map(a=>`<article class="bg-white rounded-xl border p-4">
+          <div class="text-xs text-gray-500">${esc(a.section||'Article')}</div>
+          <h3 class="mt-1 font-semibold"><a class="text-blue-700 hover:underline" href="article.html?slug=${encodeURIComponent(a.slug)}">${esc(a.title||'Untitled')}</a></h3>
+          <div class="mt-1 text-sm text-gray-600">${esc(a.author||'')}</div>
+          <div class="mt-2 text-sm text-gray-700">${esc((a.abstract||'').slice(0,180))}${(a.abstract||'').length>180?'...':''}</div>
+        </article>`).join('');
+      }catch(e){
+        box.innerHTML='<div class="text-gray-700">Issue not found or not published.</div>';
+        toc.innerHTML='';
+      }
+    }
+    load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | HALLAYM SCI-Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-blue-700">HALLAYM SCI-Journal</a>
+      <a href="login.html" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Login</a>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <div class="max-w-md mx-auto px-4 py-10">
+      <div class="bg-white rounded-xl border p-6">
+        <h1 class="text-xl font-bold">Create Author Account</h1>
+        <p class="text-gray-600 text-sm mt-1">Use a real email for editorial communication.</p>
+
+        <form id="f" class="mt-6 space-y-3">
+          <div>
+            <label class="text-sm font-medium">Full name</label>
+            <input id="name" type="text" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="Your name" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Affiliation</label>
+            <input id="aff" type="text" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="University / organization" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">ORCID (optional)</label>
+            <input id="orcid" type="text" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="0000-0000-0000-0000" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Email</label>
+            <input id="email" type="email" required class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Password (min 6 chars)</label>
+            <input id="password" type="password" required class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="Create a password" />
+          </div>
+          <button class="w-full px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Register</button>
+          <div id="msg" class="text-sm text-red-600"></div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const KEY='hsci_token';
+    document.getElementById('f').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const payload={
+        name:document.getElementById('name').value.trim(),
+        affiliation:document.getElementById('aff').value.trim(),
+        orcid:document.getElementById('orcid').value.trim(),
+        email:document.getElementById('email').value.trim(),
+        password:document.getElementById('password').value
+      };
+      const msg=document.getElementById('msg');
+      msg.textContent='';
+      try{
+        const r=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        const data=await r.json();
+        if(!r.ok) throw new Error(data.error||'Registration failed');
+        localStorage.setItem(KEY,data.token);
+        location.href='submit.html';
+      }catch(err){
+        msg.textContent=err.message||'Registration failed';
+      }
+    });
+  </script>
+</body>
+</html>

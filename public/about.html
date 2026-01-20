@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About | HALLAYM SCI-Journal</title>
+  <meta name="description" content="HALLAYM SCI-Journal haqida: scope, open access siyosati, editorial jarayon va contact." />
+
+  <link rel="icon" href="data:," />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .ring-soft { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+    .shadow-soft { box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-15 blur-3xl bg-indigo-500"></div>
+    <div class="absolute bottom-[-260px] right-[-220px] w-[820px] h-[820px] rounded-full opacity-10 blur-3xl bg-fuchsia-500"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 border-b border-slate-800/70 bg-slate-950/70 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <a href="/" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft"></span>
+        <div class="leading-tight">
+          <div class="font-bold tracking-tight" id="journalTitle">HALLAYM SCI-Journal</div>
+          <div class="text-xs text-slate-300 -mt-0.5" id="journalScope">Multidisciplinary Open Access</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-2 text-sm">
+        <a href="/" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Home</a>
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold">Submit</a>
+      </nav>
+
+      <button id="btnMenu" class="md:hidden w-10 h-10 grid place-items-center rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/70 bg-slate-950/60 glass">
+      <div class="max-w-6xl mx-auto px-4 py-3 grid gap-2 text-sm">
+        <a href="/" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Home</a>
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold">Submit</a>
+        <a href="/author-guidelines.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Author Guidelines</a>
+        <a href="/publication-ethics.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Publication Ethics</a>
+        <a href="/contact.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <div class="p-6 md:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft text-sm text-slate-200">
+        <i class="fa-solid fa-circle-info text-indigo-300"></i>
+        <span>About the Journal</span>
+      </div>
+
+      <h1 class="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">HALLAYM SCI-Journal</h1>
+      <p class="mt-3 text-slate-300 leading-relaxed">
+        HALLAYM SCI-Journal — <span class="font-semibold text-slate-100">Multidisciplinary</span> yo‘nalishdagi open-access ilmiy jurnal.
+        Jurnalning maqsadi: turli fan yo‘nalishlarida (IT, ta’lim, iqtisod, ijtimoiy fanlar va boshqalar) original ilmiy ishlarni
+        tartibli editorial jarayon orqali nashr qilish.
+      </p>
+
+      <div class="mt-6 grid lg:grid-cols-12 gap-4">
+        <div class="lg:col-span-7 p-5 rounded-2xl bg-slate-950/50 ring-soft">
+          <h2 class="text-xl font-bold">Scope</h2>
+          <ul class="mt-3 list-disc pl-5 text-slate-300 space-y-1">
+            <li>Original research articles</li>
+            <li>Review articles (systematic / narrative)</li>
+            <li>Short communications</li>
+            <li>Case studies (mavzuga mos bo‘lsa)</li>
+          </ul>
+          <p class="mt-3 text-sm text-slate-300">
+            Jurnal: <span class="font-semibold text-slate-100">Open Access</span>. License: <span class="font-semibold text-slate-100">CC BY 4.0</span> (default).
+          </p>
+        </div>
+
+        <aside class="lg:col-span-5 grid gap-3">
+          <div class="p-5 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="text-sm text-slate-300">Publisher</div>
+            <div class="mt-1 font-bold" id="publisher">Hallaym</div>
+            <div class="mt-3 text-sm text-slate-300">ISSN (Online)</div>
+            <div class="mt-1 font-semibold" id="issn">Pending</div>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="text-sm text-slate-300">Quick Links</div>
+            <div class="mt-3 grid gap-2 text-sm">
+              <a class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" href="/author-guidelines.html">Author Guidelines</a>
+              <a class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" href="/publication-ethics.html">Publication Ethics</a>
+              <a class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" href="/editorial-board.html">Editorial Board</a>
+              <a class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" href="/contact.html">Contact</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800/70 bg-slate-950/60 glass">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-xs text-slate-400">
+      © <span id="year"></span> <span id="footerTitle">HALLAYM SCI-Journal</span>. Publisher: Hallaym. ISSN (Online): <span id="footerIssn">Pending</span>.
+    </div>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    document.getElementById('btnMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (async () => {
+      try {
+        const s = await fetch('/api/journal/settings').then(r => r.json());
+        if (s?.journalTitle) {
+          $('journalTitle').textContent = s.journalTitle;
+          $('footerTitle').textContent = s.journalTitle;
+        }
+        if (s?.scope) $('journalScope').textContent = `${s.scope} Open Access`;
+        if (s?.publisher) $('publisher').textContent = s.publisher;
+        if (s?.issnOnline) {
+          $('issn').textContent = s.issnOnline;
+          $('footerIssn').textContent = s.issnOnline;
+        }
+      } catch {}
+    })();
+  </script>
+</body>
+</html>

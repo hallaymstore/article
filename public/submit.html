@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Manuscript | HALLAYM SCI-Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-blue-700"><i class="fa-solid fa-journal-whills mr-2"></i>HALLAYM SCI-Journal</a>
+      <div class="flex items-center gap-2">
+        <a href="current-issue.html" class="text-sm px-3 py-2 rounded hover:bg-gray-100">Current Issue</a>
+        <a href="archives.html" class="text-sm px-3 py-2 rounded hover:bg-gray-100">Archives</a>
+        <a href="articles.html" class="text-sm px-3 py-2 rounded hover:bg-gray-100">Articles</a>
+        <button id="logout" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-2 gap-6">
+      <section class="bg-white rounded-xl border p-6">
+        <h1 class="text-xl font-bold">Submit a Manuscript</h1>
+        <p class="text-sm text-gray-600 mt-1">Upload a PDF and metadata. Editorial decisions are managed in the admin panel.</p>
+
+        <div id="authGate" class="mt-4 hidden">
+          <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-900">
+            Please <a class="text-blue-700 underline" href="login.html">login</a> or <a class="text-blue-700 underline" href="register.html">register</a> to submit a manuscript.
+          </div>
+        </div>
+
+        <form id="form" class="mt-6 space-y-4">
+          <div>
+            <label class="text-sm font-medium">Title *</label>
+            <input id="title" required class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="Manuscript title" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Abstract</label>
+            <textarea id="abstract" class="mt-1 w-full border rounded-lg px-3 py-2" rows="5" placeholder="Abstract"></textarea>
+          </div>
+          <div>
+            <label class="text-sm font-medium">Keywords (comma separated)</label>
+            <input id="keywords" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="keyword1, keyword2" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Cover letter (optional)</label>
+            <textarea id="cover" class="mt-1 w-full border rounded-lg px-3 py-2" rows="4" placeholder="Short cover letter"></textarea>
+          </div>
+          <div>
+            <label class="text-sm font-medium">Manuscript PDF *</label>
+            <input id="pdf" type="file" accept="application/pdf" required class="mt-1 w-full border rounded-lg px-3 py-2 bg-white" />
+            <p class="text-xs text-gray-500 mt-1">Only PDF is accepted.</p>
+          </div>
+          <button id="btn" class="w-full px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Submit</button>
+          <div id="msg" class="text-sm"></div>
+        </form>
+      </section>
+
+      <section class="bg-white rounded-xl border p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold">My Submissions</h2>
+            <p class="text-sm text-gray-600">Status updates are shown here.</p>
+          </div>
+          <button id="refresh" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Refresh</button>
+        </div>
+        <div id="list" class="mt-4 space-y-3"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const KEY='hsci_token';
+    const token = () => localStorage.getItem(KEY) || '';
+
+    function esc(s){return String(s||'').replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
+
+    function setMsg(text, ok){
+      const el=document.getElementById('msg');
+      el.textContent=text||'';
+      el.className = ok ? 'text-sm text-green-700' : 'text-sm text-red-700';
+    }
+
+    function gate(){
+      const has = !!token();
+      document.getElementById('authGate').classList.toggle('hidden', has);
+      document.getElementById('form').classList.toggle('hidden', !has);
+      document.getElementById('logout').classList.toggle('hidden', !has);
+    }
+
+    async function loadList(){
+      const root=document.getElementById('list');
+      if(!token()){root.innerHTML='<div class="text-sm text-gray-600">Login to view submissions.</div>';return;}
+      root.innerHTML='<div class="text-sm text-gray-600">Loading...</div>';
+      try{
+        const r=await fetch('/api/author/submissions',{headers:{Authorization:'Bearer '+token()}});
+        const list=await r.json();
+        if(!Array.isArray(list)||!list.length){root.innerHTML='<div class="text-sm text-gray-600">No submissions yet.</div>';return;}
+        root.innerHTML=list.map(s=>`<div class="rounded-lg border p-3">
+          <div class="flex items-start justify-between gap-3 flex-wrap">
+            <div>
+              <div class="font-semibold">${esc(s.title||'Untitled')}</div>
+              <div class="text-xs text-gray-500">Status: <span class="font-medium">${esc(s.status||'')}</span> | Decision: <span class="font-medium">${esc(s.decision||'pending')}</span></div>
+              ${s.editorNote?`<div class="text-sm text-gray-700 mt-2"><span class="font-medium">Editor note:</span> ${esc(s.editorNote)}</div>`:''}
+            </div>
+            <a class="text-sm px-3 py-2 rounded bg-gray-100 hover:bg-gray-200" href="${esc(s.manuscriptPdfUrl)}" target="_blank" rel="noreferrer">PDF</a>
+          </div>
+        </div>`).join('');
+      }catch(e){
+        root.innerHTML='<div class="text-sm text-gray-700">Failed to load submissions.</div>';
+      }
+    }
+
+    document.getElementById('logout').addEventListener('click',()=>{localStorage.removeItem(KEY); location.href='index.html';});
+    document.getElementById('refresh').addEventListener('click',loadList);
+
+    document.getElementById('form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!token()){return;}
+      setMsg('',true);
+      const f=new FormData();
+      f.append('title', document.getElementById('title').value.trim());
+      f.append('abstract', document.getElementById('abstract').value.trim());
+      f.append('keywords', document.getElementById('keywords').value.trim());
+      f.append('coverLetter', document.getElementById('cover').value.trim());
+      const file=document.getElementById('pdf').files[0];
+      if(!file){setMsg('PDF required',false);return;}
+      f.append('manuscriptPdf', file);
+
+      const btn=document.getElementById('btn');
+      btn.disabled=true;
+      try{
+        const r=await fetch('/api/submissions',{method:'POST',headers:{Authorization:'Bearer '+token()},body:f});
+        const data=await r.json();
+        if(!r.ok) throw new Error(data.error||'Submission failed');
+        setMsg('Submitted successfully.',true);
+        document.getElementById('form').reset();
+        await loadList();
+      }catch(err){
+        setMsg(err.message||'Submission failed',false);
+      }finally{btn.disabled=false;}
+    });
+
+    gate();
+    loadList();
+  </script>
+</body>
+</html>

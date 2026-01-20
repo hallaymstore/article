@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title id="docTitle">Article | HALLAYM SCI-Journal</title>
+  <meta name="description" content="HALLAYM SCI-Journal — ilmiy maqola sahifasi." />
+
+  <!-- Academic meta tags (Google Scholar) will be injected dynamically by JS -->
+
+  <link rel="icon" href="data:," />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .ring-soft { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+    .shadow-soft { box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+    .proseish h2 { font-size: 1.15rem; font-weight: 800; margin-top: 1.6rem; margin-bottom: 0.6rem; }
+    .proseish h3 { font-size: 1.0rem; font-weight: 800; margin-top: 1.2rem; margin-bottom: 0.5rem; }
+    .proseish p { margin-top: .75rem; color: rgb(203 213 225); line-height: 1.75; }
+    .proseish a { color: rgb(165 180 252); }
+    .proseish ul { margin-top: .75rem; padding-left: 1.25rem; list-style: disc; color: rgb(203 213 225); }
+    .proseish ol { margin-top: .75rem; padding-left: 1.25rem; list-style: decimal; color: rgb(203 213 225); }
+    .proseish li { margin-top: .35rem; }
+    .chip { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <!-- BG glow -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-15 blur-3xl bg-indigo-500"></div>
+    <div class="absolute bottom-[-260px] right-[-220px] w-[820px] h-[820px] rounded-full opacity-10 blur-3xl bg-fuchsia-500"></div>
+  </div>
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 border-b border-slate-800/70 bg-slate-950/70 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <a href="/" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft"></span>
+        <div class="leading-tight">
+          <div class="font-bold tracking-tight" id="journalTitle">HALLAYM SCI-Journal</div>
+          <div class="text-xs text-slate-300 -mt-0.5" id="journalScope">Multidisciplinary Open Access</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-2 text-sm">
+        <a href="/" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Home</a>
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Submit</a>
+      </nav>
+
+      <button id="btnMenu" class="md:hidden w-10 h-10 grid place-items-center rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/70 bg-slate-950/60 glass">
+      <div class="max-w-6xl mx-auto px-4 py-3 grid gap-2 text-sm">
+        <a href="/" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Home</a>
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Submit</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div id="errorBox" class="hidden p-4 rounded-2xl bg-rose-900/20 border border-rose-800/50 text-rose-200"></div>
+
+    <div id="skeleton" class="animate-pulse">
+      <div class="h-8 rounded bg-slate-800/60 w-3/4"></div>
+      <div class="mt-3 h-4 rounded bg-slate-800/60 w-2/3"></div>
+      <div class="mt-6 grid lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8">
+          <div class="h-56 rounded-3xl bg-slate-800/60"></div>
+          <div class="mt-4 h-4 rounded bg-slate-800/60 w-full"></div>
+          <div class="mt-2 h-4 rounded bg-slate-800/60 w-5/6"></div>
+          <div class="mt-2 h-4 rounded bg-slate-800/60 w-4/6"></div>
+        </div>
+        <div class="lg:col-span-4">
+          <div class="h-64 rounded-3xl bg-slate-800/60"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="content" class="hidden">
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-wrap items-center gap-2 text-sm text-slate-300">
+          <a href="/articles.html" class="hover:text-slate-100"><i class="fa-solid fa-arrow-left mr-2"></i>Back to articles</a>
+          <span class="text-slate-600">•</span>
+          <span id="issueBadge" class="hidden px-3 py-1.5 rounded-full bg-slate-900/60 chip"></span>
+          <span class="text-slate-600">•</span>
+          <span id="issnBadge" class="px-3 py-1.5 rounded-full bg-slate-900/60 chip">ISSN (Online): <span id="issnOnline">Pending</span></span>
+        </div>
+
+        <h1 id="title" class="text-3xl md:text-5xl font-extrabold tracking-tight"></h1>
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div>
+            <div id="authors" class="text-slate-200 font-semibold"></div>
+            <div id="affiliations" class="text-sm text-slate-300 mt-1"></div>
+            <div id="dates" class="text-xs text-slate-400 mt-1"></div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a id="btnPdf" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold" href="#">
+              <i class="fa-regular fa-file-pdf"></i>
+              Download PDF
+            </a>
+            <button id="btnCite" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+              <i class="fa-solid fa-quote-right"></i>
+              Cite
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-2 flex flex-wrap gap-2" id="keywordChips"></div>
+      </div>
+
+      <div class="mt-6 grid lg:grid-cols-12 gap-6 items-start">
+        <article class="lg:col-span-8 p-5 md:p-7 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+          <div id="abstractBox" class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Abstract</div>
+            <div id="abstract" class="mt-2 text-slate-200 leading-relaxed"></div>
+          </div>
+
+          <div class="mt-6 proseish" id="articleBody"></div>
+
+          <div class="mt-8 p-4 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">References</div>
+            <ol id="references" class="mt-3"></ol>
+          </div>
+        </article>
+
+        <aside class="lg:col-span-4 grid gap-4">
+          <div class="p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+            <div class="font-bold">Journal metadata</div>
+            <div class="mt-3 grid gap-2 text-sm text-slate-300">
+              <div><span class="text-slate-400">Journal:</span> <span id="journalName">HALLAYM SCI-Journal</span></div>
+              <div><span class="text-slate-400">Publisher:</span> <span id="publisher">Hallaym</span></div>
+              <div><span class="text-slate-400">Scope:</span> <span id="scope">Multidisciplinary</span></div>
+              <div><span class="text-slate-400">License:</span> <span id="license">CC BY 4.0</span></div>
+              <div><span class="text-slate-400">DOI:</span> <span id="doi">—</span></div>
+              <div><span class="text-slate-400">Pages:</span> <span id="pages">—</span></div>
+              <div><span class="text-slate-400">Section:</span> <span id="section">Research Article</span></div>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+            <div class="font-bold">Rating</div>
+            <div class="mt-3 flex items-center gap-2">
+              <div id="stars" class="flex items-center gap-1"></div>
+              <div class="text-xs text-slate-400" id="rateHint">1–5 baholang</div>
+            </div>
+            <div id="rateMsg" class="mt-2 text-xs text-slate-300"></div>
+          </div>
+
+          <div class="p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+            <div class="font-bold">Comments</div>
+            <form id="commentForm" class="mt-3 grid gap-2">
+              <input id="cName" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Ism (ixtiyoriy)" />
+              <textarea id="cText" rows="4" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Fikr (comment)"></textarea>
+              <button class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold" type="submit">Send</button>
+              <div id="commentMsg" class="text-xs text-slate-300"></div>
+            </form>
+
+            <div id="commentList" class="mt-4 grid gap-3"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Cite modal -->
+  <div id="citeModal" class="hidden fixed inset-0 z-50">
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 grid place-items-center p-4">
+      <div class="w-full max-w-2xl rounded-3xl bg-slate-950 border border-slate-800/70 shadow-soft">
+        <div class="p-5 border-b border-slate-800/70 flex items-center justify-between">
+          <div class="font-bold">How to cite</div>
+          <button id="btnCloseCite" class="w-10 h-10 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="p-5">
+          <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">APA (suggested)</div>
+          <div class="mt-2 p-4 rounded-2xl bg-slate-900/60 ring-soft">
+            <div id="citeText" class="text-slate-200"></div>
+          </div>
+          <button id="btnCopyCite" class="mt-4 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold">
+            <i class="fa-regular fa-copy"></i>
+            Copy
+          </button>
+          <div id="copyMsg" class="mt-2 text-xs text-slate-300"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+    function fmtDate(d) {
+      if (!d) return '';
+      try { return new Date(d).toLocaleDateString('uz-UZ', { year:'numeric', month:'short', day:'2-digit' }); }
+      catch { return ''; }
+    }
+
+    function getSlug() {
+      const u = new URL(location.href);
+      return u.searchParams.get('slug') || '';
+    }
+
+    function injectScholarMeta(settings, article) {
+      const head = document.head;
+      const add = (name, content, isProp=false) => {
+        if (!content) return;
+        const m = document.createElement('meta');
+        if (isProp) m.setAttribute('property', name);
+        else m.setAttribute('name', name);
+        m.setAttribute('content', content);
+        head.appendChild(m);
+      };
+
+      // citation_* meta for Google Scholar
+      add('citation_journal_title', settings?.journalTitle || 'HALLAYM SCI-Journal');
+      add('citation_title', article.title);
+      (article.authors?.length ? article.authors : [{ name: article.author }]).forEach(a => add('citation_author', a?.name || ''));
+      add('citation_publication_date', (article.publishedAt || article.publicationDate || article.createdAt) ? new Date(article.publishedAt || article.publicationDate || article.createdAt).toISOString().slice(0,10) : '');
+      if (article.volume) add('citation_volume', String(article.volume));
+      if (article.issue) add('citation_issue', String(article.issue));
+      if (article.pages) add('citation_firstpage', String(article.pages).split('-')[0].trim());
+      if (article.pages && String(article.pages).includes('-')) add('citation_lastpage', String(article.pages).split('-')[1].trim());
+      add('citation_pdf_url', `${location.origin}/api/articles/${encodeURIComponent(article.slug)}/pdf`);
+      if (article.doi) add('citation_doi', article.doi);
+
+      // basic OG
+      add('og:title', `${article.title} | ${settings?.journalTitle || 'HALLAYM SCI-Journal'}`, true);
+      add('og:description', article.abstract || '', true);
+      add('og:type', 'article', true);
+      add('og:url', location.href, true);
+    }
+
+    function makeCite(settings, article) {
+      const j = settings?.journalTitle || 'HALLAYM SCI-Journal';
+      const year = (article.year || (article.publishedAt ? new Date(article.publishedAt).getFullYear() : (article.publicationDate ? new Date(article.publicationDate).getFullYear() : '')));
+      const authors = (article.authors?.length ? article.authors : [{ name: article.author }]).map(a => a?.name).filter(Boolean);
+
+      const authorText = authors.length ? authors.join(', ') : 'Anonymous';
+      const volIssue = (article.volume && article.issue) ? `${article.volume}(${article.issue})` : (article.volume ? String(article.volume) : '');
+      const pages = article.pages ? `, ${article.pages}` : '';
+      const doi = article.doi ? ` https://doi.org/${article.doi}` : '';
+      const url = `${location.origin}/article.html?slug=${encodeURIComponent(article.slug)}`;
+
+      if (volIssue) {
+        return `${authorText}. (${year}). ${article.title}. ${j}, ${volIssue}${pages}.${doi || ` ${url}`}`.trim();
+      }
+      return `${authorText}. (${year}). ${article.title}. ${j}.${doi || ` ${url}`}`.trim();
+    }
+
+    function renderStars(articleId) {
+      const stars = $('stars');
+      stars.innerHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'w-9 h-9 rounded-xl bg-slate-950 border border-slate-800 hover:bg-slate-900 grid place-items-center';
+        btn.innerHTML = '<i class="fa-solid fa-star text-amber-300"></i>';
+        btn.title = `${i}`;
+        btn.addEventListener('click', async () => {
+          $('rateMsg').textContent = 'Sending...';
+          try {
+            const r = await fetch(`/api/articles/${articleId}/rate`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ rating: i })
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) {
+              $('rateMsg').textContent = d.error || 'Rating failed.';
+              return;
+            }
+            $('rateMsg').textContent = 'Rahmat! Baholandi.';
+          } catch {
+            $('rateMsg').textContent = 'Network error.';
+          }
+        });
+        stars.appendChild(btn);
+      }
+    }
+
+    async function loadComments(articleId) {
+      const list = $('commentList');
+      list.innerHTML = '<div class="text-sm text-slate-300">Loading...</div>';
+      try {
+        const items = await fetch(`/api/articles/${articleId}/comments`).then(r => r.json());
+        if (!Array.isArray(items) || !items.length) {
+          list.innerHTML = '<div class="text-sm text-slate-400">Hozircha comment yo‘q.</div>';
+          return;
+        }
+        list.innerHTML = items.map(c => `
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="flex items-center justify-between gap-3">
+              <div class="font-semibold text-slate-200">${esc(c.name || 'Anonymous')}</div>
+              <div class="text-xs text-slate-500">${fmtDate(c.createdAt)}</div>
+            </div>
+            <div class="mt-1 text-sm text-slate-300">${esc(c.comment || '')}</div>
+          </div>
+        `).join('');
+      } catch {
+        list.innerHTML = '<div class="text-sm text-rose-200">Comments load failed.</div>';
+      }
+    }
+
+    async function main() {
+      const slug = getSlug();
+      if (!slug) {
+        $('skeleton').classList.add('hidden');
+        $('errorBox').classList.remove('hidden');
+        $('errorBox').textContent = 'Slug topilmadi. URL: article.html?slug=...';
+        return;
+      }
+
+      document.getElementById('btnMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+
+      // settings
+      let settings = null;
+      try {
+        settings = await fetch('/api/journal/settings').then(r => r.json());
+        if (settings?.journalTitle) $('journalTitle').textContent = settings.journalTitle;
+        if (settings?.scope) $('journalScope').textContent = `${settings.scope} Open Access`;
+        if (settings?.journalTitle) $('journalName').textContent = settings.journalTitle;
+        if (settings?.publisher) $('publisher').textContent = settings.publisher;
+        if (settings?.scope) $('scope').textContent = settings.scope;
+        if (settings?.issnOnline) $('issnOnline').textContent = settings.issnOnline;
+        if (settings?.defaultLicense) $('license').textContent = settings.defaultLicense;
+      } catch {}
+
+      // article
+      let article = null;
+      try {
+        const r = await fetch(`/api/articles/${encodeURIComponent(slug)}`);
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.error || 'Article not found');
+        article = d;
+      } catch (e) {
+        $('skeleton').classList.add('hidden');
+        $('errorBox').classList.remove('hidden');
+        $('errorBox').textContent = String(e.message || e);
+        return;
+      }
+
+      // Inject scholar metas
+      injectScholarMeta(settings, article);
+
+      // Fill
+      $('skeleton').classList.add('hidden');
+      $('content').classList.remove('hidden');
+
+      $('docTitle').textContent = `${article.title} | ${settings?.journalTitle || 'HALLAYM SCI-Journal'}`;
+      $('title').textContent = article.title;
+
+      const authArr = (article.authors?.length ? article.authors : [{ name: article.author, affiliation: '' }]);
+      $('authors').textContent = authArr.map(a => a?.name).filter(Boolean).join(', ');
+      $('affiliations').textContent = authArr.map(a => a?.affiliation).filter(Boolean).join(' • ');
+
+      const received = article.receivedAt ? `Received: ${fmtDate(article.receivedAt)}` : '';
+      const accepted = article.acceptedAt ? `Accepted: ${fmtDate(article.acceptedAt)}` : '';
+      const published = (article.publishedAt || article.publicationDate || article.createdAt) ? `Published: ${fmtDate(article.publishedAt || article.publicationDate || article.createdAt)}` : '';
+      $('dates').textContent = [received, accepted, published].filter(Boolean).join('   |   ');
+
+      // Issue badge
+      if (article.volume && article.issue && article.year) {
+        $('issueBadge').classList.remove('hidden');
+        $('issueBadge').innerHTML = `<a class="hover:text-slate-100" href="/issue.html?id=${encodeURIComponent(article.issueId || '')}">Vol. ${article.volume}, No. ${article.issue} (${article.year})</a>`;
+      }
+
+      $('abstract').textContent = article.abstract || '';
+      $('doi').textContent = article.doi || '—';
+      $('pages').textContent = article.pages || '—';
+      $('section').textContent = article.section || 'Research Article';
+
+      const kw = Array.isArray(article.keywords) ? article.keywords : [];
+      $('keywordChips').innerHTML = kw.slice(0, 12).map(k => `<a href="/articles.html?q=${encodeURIComponent(k)}" class="px-3 py-1.5 rounded-full bg-slate-900/60 chip text-sm hover:bg-slate-900">#${esc(k)}</a>`).join('');
+
+      // Body render
+      const parts = [];
+      if (article.introduction) {
+        parts.push(`<h2>Introduction</h2><p>${esc(article.introduction)}</p>`);
+      }
+      if (Array.isArray(article.body)) {
+        article.body.forEach(sec => {
+          if (sec?.heading) parts.push(`<h2>${esc(sec.heading)}</h2>`);
+          if (sec?.content) parts.push(`<p>${esc(sec.content)}</p>`);
+        });
+      }
+      if (article.conclusion) {
+        parts.push(`<h2>Conclusion</h2><p>${esc(article.conclusion)}</p>`);
+      }
+      $('articleBody').innerHTML = parts.join('');
+
+      // References
+      const refs = Array.isArray(article.references) ? article.references : [];
+      $('references').innerHTML = refs.length ? refs.map(r => `<li>${esc(r)}</li>`).join('') : `<li>—</li>`;
+
+      // PDF
+      $('btnPdf').href = `/api/articles/${encodeURIComponent(article.slug)}/pdf`;
+
+      // Cite
+      const cite = makeCite(settings, article);
+      $('citeText').textContent = cite;
+      $('btnCite').addEventListener('click', () => $('citeModal').classList.remove('hidden'));
+      $('btnCloseCite').addEventListener('click', () => $('citeModal').classList.add('hidden'));
+      $('citeModal').addEventListener('click', (e) => {
+        if (e.target === $('citeModal').firstElementChild) $('citeModal').classList.add('hidden');
+      });
+      $('btnCopyCite').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(cite);
+          $('copyMsg').textContent = 'Copied.';
+        } catch {
+          $('copyMsg').textContent = 'Copy failed.';
+        }
+      });
+
+      // Rating / comments
+      renderStars(article._id);
+      await loadComments(article._id);
+
+      $('commentForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = $('cName').value.trim();
+        const comment = $('cText').value.trim();
+        if (!comment) {
+          $('commentMsg').textContent = 'Comment bo‘sh bo‘lmasin.';
+          return;
+        }
+        $('commentMsg').textContent = 'Sending...';
+        try {
+          const r = await fetch(`/api/articles/${article._id}/comment`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, comment })
+          });
+          const d = await r.json().catch(() => ({}));
+          if (!r.ok) {
+            $('commentMsg').textContent = d.error || 'Failed.';
+            return;
+          }
+          $('commentMsg').textContent = 'Yuborildi.';
+          $('cText').value = '';
+          await loadComments(article._id);
+        } catch {
+          $('commentMsg').textContent = 'Network error.';
+        }
+      });
+    }
+
+    main();
+  </script>
+</body>
+</html>

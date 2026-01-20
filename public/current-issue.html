@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Current Issue | HALLAYM SCI-Journal</title>
+  <meta name="description" content="Current published issue and table of contents." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-blue-700"><i class="fa-solid fa-journal-whills mr-2"></i>HALLAYM SCI-Journal</a>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="current-issue.html">Current Issue</a>
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="archives.html">Archives</a>
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="articles.html">Articles</a>
+        <a class="px-3 py-2 rounded hover:bg-gray-100" href="submit.html">Submit</a>
+      </nav>
+      <a href="login.html" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Login</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="text-2xl font-bold">Current Issue</h1>
+        <p class="text-gray-600">Published issue and table of contents.</p>
+      </div>
+    </div>
+
+    <div id="issue" class="mt-6 bg-white rounded-xl border p-5"></div>
+    <div id="toc" class="mt-6 grid md:grid-cols-2 gap-4"></div>
+  </main>
+
+  <footer class="border-t bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-gray-600">Copyright 2026 HALLAYM SCI-Journal</div>
+  </footer>
+
+  <script>
+    function esc(s){return String(s||'').replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
+    function issueLabel(i){return `Volume ${i.volume}, Issue ${i.number} (${i.year})`;}
+    async function load(){
+      const issueBox=document.getElementById('issue');
+      const toc=document.getElementById('toc');
+      try{
+        const r=await fetch('/api/issues/current');
+        if(!r.ok) throw new Error('no');
+        const issue=await r.json();
+        issueBox.innerHTML=`<div class="flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <div class="text-sm text-gray-500">${esc(issueLabel(issue))}</div>
+            <div class="mt-1 text-xl font-semibold">${esc(issue.title||'Current Issue')}</div>
+            <div class="mt-2 text-gray-700">${esc(issue.description||'')}</div>
+          </div>
+          <a class="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700" href="issue.html?id=${encodeURIComponent(issue._id)}">Open Issue Page</a>
+        </div>`;
+        const rr=await fetch(`/api/issues/${encodeURIComponent(issue._id)}/articles`);
+        const data=await rr.json();
+        const articles=data.articles||[];
+        if(!articles.length){toc.innerHTML='<div class="text-gray-600">No articles published in this issue yet.</div>';return;}
+        toc.innerHTML=articles.map(a=>`<article class="bg-white rounded-xl border p-4">
+          <div class="text-xs text-gray-500">${esc(a.section||'Article')}</div>
+          <h3 class="mt-1 font-semibold"><a class="text-blue-700 hover:underline" href="article.html?slug=${encodeURIComponent(a.slug)}">${esc(a.title)}</a></h3>
+          <div class="mt-1 text-sm text-gray-600">${esc(a.author||'')}</div>
+          <div class="mt-2 text-sm text-gray-700">${esc((a.abstract||'').slice(0,180))}${(a.abstract||'').length>180?'...':''}</div>
+        </article>`).join('');
+      }catch(e){
+        issueBox.innerHTML='<div class="text-gray-700">No published issue yet. You can publish an issue from the admin panel.</div>';
+        toc.innerHTML='';
+      }
+    }
+    load();
+  </script>
+</body>
+</html>

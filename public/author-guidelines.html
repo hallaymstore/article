@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Author Guidelines | HALLAYM SCI-Journal</title>
+  <meta name="description" content="HALLAYM SCI-Journal mualliflar uchun qo‘llanma: format, strukturasi, submission va rasmiy talablar." />
+
+  <link rel="icon" href="data:," />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .ring-soft { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+    .shadow-soft { box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+    .proseish h2 { font-size: 1.1rem; font-weight: 800; margin-top: 1.4rem; margin-bottom: .6rem; }
+    .proseish h3 { font-size: 1.0rem; font-weight: 800; margin-top: 1.0rem; margin-bottom: .5rem; }
+    .proseish p { margin-top: .7rem; color: rgb(203 213 225); line-height: 1.75; }
+    .proseish ul { margin-top: .7rem; padding-left: 1.25rem; list-style: disc; color: rgb(203 213 225); }
+    .proseish li { margin-top: .35rem; }
+    .chip { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-15 blur-3xl bg-indigo-500"></div>
+    <div class="absolute bottom-[-260px] right-[-220px] w-[820px] h-[820px] rounded-full opacity-10 blur-3xl bg-fuchsia-500"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 border-b border-slate-800/70 bg-slate-950/70 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <a href="/" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft"></span>
+        <div class="leading-tight">
+          <div class="font-bold tracking-tight" id="journalTitle">HALLAYM SCI-Journal</div>
+          <div class="text-xs text-slate-300 -mt-0.5" id="journalScope">Multidisciplinary Open Access</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-2 text-sm">
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft">Submit</a>
+      </nav>
+
+      <button id="btnMenu" class="md:hidden w-10 h-10 grid place-items-center rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/70 bg-slate-950/60 glass">
+      <div class="max-w-6xl mx-auto px-4 py-3 grid gap-2 text-sm">
+        <a href="/current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="/archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="/articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+        <a href="/submit.html" class="px-3 py-2 rounded-xl bg-slate-900/60 ring-soft">Submit</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="p-6 md:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft shadow-soft">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <div class="text-xs text-slate-300">Mualliflar uchun</div>
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Author Guidelines</h1>
+          <p class="mt-2 text-slate-300 leading-relaxed max-w-3xl">
+            Ushbu qo‘llanma HALLAYM SCI-Journal’ga maqola topshirish (submission) jarayonini soddalashtiradi.
+            ISSN hozircha <span class="font-semibold">Pending</span>. Jurnal: <span class="font-semibold">Open Access</span>.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1.5 rounded-full chip bg-slate-950/60 text-sm">Scope: Multidisciplinary</span>
+          <span class="px-3 py-1.5 rounded-full chip bg-slate-950/60 text-sm">License: CC BY 4.0</span>
+        </div>
+      </div>
+
+      <div class="mt-6 grid lg:grid-cols-12 gap-4">
+        <section class="lg:col-span-7 p-5 rounded-2xl bg-slate-950/50 ring-soft proseish">
+          <h2>1. Maqola strukturasi (tavsiya)</h2>
+          <ul>
+            <li><strong>Title</strong> — aniq va qisqa.</li>
+            <li><strong>Authors</strong> — F.I.O, affiliation, ORCID (ixtiyoriy).</li>
+            <li><strong>Abstract</strong> — 150–250 so‘z.</li>
+            <li><strong>Keywords</strong> — 5–7 ta.</li>
+            <li><strong>Introduction</strong> — muammo va maqsad.</li>
+            <li><strong>Methods / Materials</strong> — metodika (mavzuga qarab).</li>
+            <li><strong>Results</strong> — natijalar.</li>
+            <li><strong>Discussion</strong> — tahlil va solishtirish.</li>
+            <li><strong>Conclusion</strong> — xulosa va takliflar.</li>
+            <li><strong>References</strong> — bibliografiya.</li>
+          </ul>
+
+          <h2>2. Format talablari</h2>
+          <ul>
+            <li>Fayl: <strong>PDF</strong> (majburiy). Qo‘shimcha fayl (jadval/dataset) ixtiyoriy.</li>
+            <li>Til: Uzbek / English (yoki aralash — mavzuga qarab). Abstract’ni English’da berish tavsiya.</li>
+            <li>Plagiat: muallif 100% javobgar. Iqtiboslar aniq ko‘rsatilishi shart.</li>
+            <li>Grafiklar: o‘qiladigan, sarlavha va raqamlar bilan.</li>
+          </ul>
+
+          <h2>3. References (tavsiya format)</h2>
+          <p>
+            APA 7 yoki IEEE tavsiya etiladi. Muhimi — bir xil formatda bo‘lishi.
+            Agar DOI mavjud bo‘lsa, ko‘rsatish tavsiya.
+          </p>
+
+          <h2>4. Submission jarayoni</h2>
+          <ul>
+            <li><strong>Register</strong> → <strong>Login</strong> → <strong>Submit</strong>.</li>
+            <li>Maqola holati: submitted → screening → (review/revision) → accepted → published.</li>
+            <li>Tahririyat muallif bilan platforma orqali bog‘lanadi.</li>
+          </ul>
+
+          <h2>5. Muallifning majburiyatlari</h2>
+          <ul>
+            <li>Original ish (yoki aniq cite bilan).</li>
+            <li>Conflict of interest bo‘lsa ko‘rsatish.</li>
+            <li>Mualliflar ro‘yxati va hissasi adolatli.</li>
+          </ul>
+        </section>
+
+        <aside class="lg:col-span-5 grid gap-4">
+          <div class="p-5 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-bold">Tez linklar</div>
+            <div class="mt-3 grid gap-2 text-sm text-slate-300">
+              <a href="/submit.html" class="hover:text-slate-100">Submission page</a>
+              <a href="/publication-ethics.html" class="hover:text-slate-100">Publication Ethics</a>
+              <a href="/editorial-board.html" class="hover:text-slate-100">Editorial Board</a>
+              <a href="/contact.html" class="hover:text-slate-100">Contact</a>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="text-sm text-slate-300">Tavsiya</div>
+            <div class="mt-1 font-bold">Metadata’ni to‘liq kiriting</div>
+            <p class="mt-2 text-sm text-slate-300 leading-relaxed">
+              Title, Authors, Abstract, Keywords va References to‘liq bo‘lsa, maqola sahifasi ilmiy ko‘rinishda chiqadi,
+              iqtibos (How to cite) avtomatik generatsiya qilinadi.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800/70 bg-slate-950/60 glass">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-xs text-slate-400">
+      © <span id="year"></span> <span id="footerTitle">HALLAYM SCI-Journal</span>. Publisher: Hallaym. ISSN (Online): <span id="footerIssn">Pending</span>.
+    </div>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    document.getElementById('btnMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (async () => {
+      try {
+        const s = await fetch('/api/journal/settings').then(r => r.json());
+        if (s?.journalTitle) {
+          $('journalTitle').textContent = s.journalTitle;
+          $('footerTitle').textContent = s.journalTitle;
+        }
+        if (s?.scope) $('journalScope').textContent = `${s.scope} Open Access`;
+        if (s?.issnOnline) $('footerIssn').textContent = s.issnOnline;
+      } catch {}
+    })();
+  </script>
+</body>
+</html>
