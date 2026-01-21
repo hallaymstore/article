@@ -85,7 +85,7 @@
           The Global Science
         </div>
         <div class="text-xs text-slate-300 -mt-0.5" id="journalScope">
-          Multidisciplinary Open Access Journal
+          Multidisciplinary Open Access Journale
         </div>
       </div>
     </a>
@@ -359,15 +359,15 @@
       // settings
       try {
         const s = await fetch('/api/journal/settings').then(r => r.json());
-        /* Title is intentionally fixed to the site brand to avoid overwriting from backend settings. */
-        $('journalTitle').textContent = 'The Global Science';
-        $('footerTitle').textContent = 'The Global Science';
-
+        if (s?.journalTitle) {
+          $('journalTitle').textContent = s.journalTitle;
+          $('footerTitle').textContent = s.journalTitle;
+        }
         if (s?.issnOnline) {
           $('issnOnline').textContent = s.issnOnline;
           $('footerIssn').textContent = s.issnOnline;
         }
-        if (s?.scope) $('journalScope').textContent = `${s.scope} Open Access Journal`;
+        if (s?.scope) $('journalScope').textContent = `${s.scope} Open Access`;
         if (s?.publisher) $('footerPublisher').textContent = `Publisher: ${s.publisher}`;
         if (s?.contactEmail) $('contactEmail').textContent = s.contactEmail;
         if (s?.country) $('country').textContent = s.country;
