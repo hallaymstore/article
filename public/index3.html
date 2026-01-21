@@ -6,7 +6,7 @@
   <title>The Global Science</title>
   <meta name="description" content="The Global Science is a multidisciplinary open-access scientific journal. Explore the current issue, archives, submissions, and journal policies." />
 
-  <link rel="icon" href="https://res.cloudinary.com/dh3heagct/image/upload/v1769007420/uploadsx/file.png" />
+  <link rel="icon" href="https://res.cloudinary.com/dh3heagct/image/upload/v1769005383/uploadsx/file.jpg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -87,7 +87,9 @@
 
     <!-- Logo -->
     <a href="/" class="flex items-center gap-3">
-      <img src="https://res.cloudinary.com/dh3heagct/image/upload/v1769007420/uploadsx/file.png" alt="The Global Science logo" class="w-10 h-10 rounded-xl object-contain shadow-soft bg-transparent" loading="eager" />
+      <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft grid place-items-center">
+        <i class="fa-solid fa-atom text-white text-lg"></i>
+      </span>
       <div class="leading-tight">
         <div class="font-bold tracking-tight text-slate-100" id="journalTitle">
           The Global Science
@@ -149,51 +151,32 @@
     </div>
   </header>
 
-  
-  <!-- MAIN -->
-  <main class="max-w-6xl mx-auto px-4 pt-8 md:pt-10 pb-12">
-
-    <!-- Top strip: credibility + quick actions -->
-    <section class="grid lg:grid-cols-12 gap-4">
-      <div class="lg:col-span-8 p-5 md:p-6 rounded-3xl bg-gradient-to-br from-slate-900/80 to-slate-950/60 border border-slate-800/70 shadow-soft">
-        <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm text-slate-200">
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft">
-            <i class="fa-solid fa-lock-open text-indigo-300"></i>
-            Open Access
-          </span>
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft">
-            <i class="fa-solid fa-user-check text-emerald-300"></i>
-            Peer Review
-          </span>
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft">
-            <i class="fa-solid fa-earth-americas text-cyan-300"></i>
-            International Journal
-          </span>
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft">
-            <i class="fa-solid fa-scale-balanced text-fuchsia-300"></i>
-            Publication Ethics
-          </span>
+  <!-- HERO -->
+  <section class="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-8">
+    <div class="grid lg:grid-cols-12 gap-6 items-stretch">
+      <div class="lg:col-span-7 p-5 md:p-7 rounded-3xl bg-gradient-to-br from-slate-900/80 to-slate-950/60 border border-slate-800/70 shadow-soft">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 ring-soft text-sm text-slate-200">
+          <i class="fa-solid fa-sparkles text-indigo-300"></i>
+          <span>Open Access · Multidisciplinary · Peer-review workflow</span>
         </div>
 
-        <h1 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight">The Global Science</h1>
+        <h1 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight">
+          The Global Science
+        </h1>
 
         <p class="mt-3 text-slate-300 text-base md:text-lg leading-relaxed">
-          A multidisciplinary open-access scientific journal publishing original research, reviews, short communications, and applied studies.
+          A multidisciplinary scientific journal featuring research articles, reviews, short communications, and applied research.
           ISSN (Online): <span class="font-semibold" id="issnOnline">Pending</span>.
         </p>
 
         <div class="mt-5 flex flex-col sm:flex-row gap-2">
-          <a href="/submit.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-semibold">
-            <i class="fa-solid fa-file-arrow-up"></i>
-            Submit Manuscript
+          <a href="/current-issue.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-semibold">
+            <i class="fa-solid fa-layer-group"></i>
+            Current Issue
           </a>
-          <a href="/author-guidelines.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-slate-900/60 ring-soft hover:bg-slate-900">
-            <i class="fa-solid fa-list-check"></i>
-            Author Guidelines
-          </a>
-          <a href="/publication-ethics.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-slate-900/60 ring-soft hover:bg-slate-900">
-            <i class="fa-solid fa-shield-heart"></i>
-            Ethics & Policies
+          <a href="/archives.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+            <i class="fa-solid fa-box-archive"></i>
+            Archives
           </a>
         </div>
 
@@ -209,212 +192,75 @@
               Search
             </button>
           </div>
+
           <div class="mt-3 flex flex-wrap gap-2 text-xs">
             <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="research">#research</button>
             <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="review">#review</button>
-            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="medicine">#medicine</button>
+            <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="education">#education</button>
             <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="technology">#technology</button>
             <button class="tagBtn px-3 py-1.5 rounded-full bg-slate-900/60 ring-soft hover:bg-slate-900" data-tag="economics">#economics</button>
           </div>
         </div>
       </div>
 
-      <!-- Right column: Current Issue + journal facts -->
-      <aside class="lg:col-span-4 grid gap-4">
-        <div class="p-5 md:p-6 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
-          <div class="flex items-center justify-between">
-            <div class="text-sm text-slate-300">Current Issue</div>
-            <a href="/current-issue.html" class="text-sm text-indigo-300 hover:text-indigo-200">Open</a>
-          </div>
-          <div id="currentIssue" class="mt-3">
-            <div class="animate-pulse">
-              <div class="h-28 rounded-2xl bg-slate-800/70"></div>
-              <div class="mt-3 h-5 rounded bg-slate-800/70 w-3/4"></div>
-              <div class="mt-2 h-4 rounded bg-slate-800/70 w-full"></div>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-3 gap-2 text-xs text-slate-300">
-            <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
-              <div class="font-semibold text-slate-100" id="statArticles">—</div>
-              <div class="mt-0.5">Articles</div>
-            </div>
-            <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
-              <div class="font-semibold text-slate-100" id="statIssues">—</div>
-              <div class="mt-0.5">Issues</div>
-            </div>
-            <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
-              <div class="font-semibold text-slate-100" id="statViews">—</div>
-              <div class="mt-0.5">Views</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-5 md:p-6 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
-          <div class="text-sm text-slate-300">Journal Information</div>
-          <div class="mt-4 grid gap-3 text-sm text-slate-300">
-            <div class="flex items-start gap-3">
-              <i class="fa-solid fa-calendar-check mt-0.5 text-slate-400"></i>
-              <div>
-                <div class="font-semibold text-slate-100">Publication Frequency</div>
-                <div>Continuous publishing (issues compiled periodically).</div>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <i class="fa-solid fa-file-signature mt-0.5 text-slate-400"></i>
-              <div>
-                <div class="font-semibold text-slate-100">Licensing</div>
-                <div>Open-access licensing and reuse terms described in journal policies.</div>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <i class="fa-solid fa-user-tie mt-0.5 text-slate-400"></i>
-              <div>
-                <div class="font-semibold text-slate-100">Editorial Office</div>
-                <div>See the editorial board and contact details.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-2 gap-2">
-            <a class="px-4 py-2 rounded-2xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-sm text-center" href="/editorial-board.html">
-              Editorial Board
-            </a>
-            <a class="px-4 py-2 rounded-2xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-sm text-center" href="/contact.html">
-              Contact
-            </a>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- Official journal sections -->
-    <section class="mt-8 grid lg:grid-cols-12 gap-4">
-      <div class="lg:col-span-7 p-5 md:p-6 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
-        <div class="flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-xl md:text-2xl font-bold tracking-tight">Aims & Scope</h2>
-            <p class="text-slate-300 mt-1 text-sm md:text-base">
-              The Global Science welcomes high-quality manuscripts across disciplines, prioritizing methodological rigor, reproducibility, and societal impact.
-            </p>
-          </div>
-          <a href="/about.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-sm">
-            Learn more <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="mt-5 grid sm:grid-cols-2 gap-3 text-sm">
-          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
-            <div class="font-semibold text-slate-100"><i class="fa-solid fa-flask mr-2 text-slate-400"></i>Research Articles</div>
-            <div class="mt-1 text-slate-300">Original studies with complete methods and results.</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
-            <div class="font-semibold text-slate-100"><i class="fa-solid fa-book-open-reader mr-2 text-slate-400"></i>Review Articles</div>
-            <div class="mt-1 text-slate-300">Comprehensive syntheses and systematic reviews.</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
-            <div class="font-semibold text-slate-100"><i class="fa-solid fa-bolt mr-2 text-slate-400"></i>Short Communications</div>
-            <div class="mt-1 text-slate-300">Concise, timely contributions of broad interest.</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
-            <div class="font-semibold text-slate-100"><i class="fa-solid fa-gears mr-2 text-slate-400"></i>Applied Research</div>
-            <div class="mt-1 text-slate-300">Engineering, technology transfer, and practice.</div>
-          </div>
-        </div>
-      </div>
-
+      <!-- Current issue card -->
       <div class="lg:col-span-5 p-5 md:p-6 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
-        <h2 class="text-xl md:text-2xl font-bold tracking-tight">Announcements</h2>
-        <p class="text-slate-300 mt-1 text-sm md:text-base">Key updates from the editorial office.</p>
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-slate-300">Current Issue</div>
+          <a href="/current-issue.html" class="text-sm text-indigo-300 hover:text-indigo-200">Open</a>
+        </div>
 
-        <div class="mt-4 grid gap-3 text-sm">
-          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
-            <div class="flex items-center justify-between gap-3">
-              <div class="font-semibold text-slate-100"><i class="fa-solid fa-bullhorn mr-2 text-slate-400"></i>Call for Papers</div>
-              <span class="text-xs text-slate-400">Open</span>
-            </div>
-            <div class="mt-1 text-slate-300">We invite submissions across all disciplines. Please follow the author guidelines.</div>
-            <div class="mt-3 flex gap-2">
-              <a href="/submit.html" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold">Submit</a>
-              <a href="/author-guidelines.html" class="px-3 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-xs">Guidelines</a>
-            </div>
+        <div id="currentIssue" class="mt-3">
+          <div class="animate-pulse">
+            <div class="h-28 rounded-2xl bg-slate-800/70"></div>
+            <div class="mt-3 h-5 rounded bg-slate-800/70 w-3/4"></div>
+            <div class="mt-2 h-4 rounded bg-slate-800/70 w-full"></div>
           </div>
+        </div>
 
-          <div class="p-4 rounded-2xl bg-slate-950/50 ring-soft">
-            <div class="flex items-center justify-between gap-3">
-              <div class="font-semibold text-slate-100"><i class="fa-solid fa-shield-check mr-2 text-slate-400"></i>Ethics & Integrity</div>
-              <span class="text-xs text-slate-400">Policy</span>
-            </div>
-            <div class="mt-1 text-slate-300">The journal follows clear policies on authorship, conflicts of interest, and misconduct.</div>
-            <div class="mt-3">
-              <a href="/publication-ethics.html" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-xs">
-                Read policy <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
+        <div class="mt-5 grid grid-cols-3 gap-2 text-xs text-slate-300">
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-semibold text-slate-100" id="statArticles">—</div>
+            <div class="mt-0.5">Articles</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-semibold text-slate-100" id="statIssues">—</div>
+            <div class="mt-0.5">Issues</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-950/50 ring-soft">
+            <div class="font-semibold text-slate-100" id="statViews">—</div>
+            <div class="mt-0.5">Views</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Latest publications -->
-    <section class="mt-8">
-      <div class="flex items-end justify-between gap-4">
-        <div>
-          <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Latest Publications</h2>
-          <p class="text-slate-300 mt-1">Recently published articles and research outputs.</p>
-        </div>
-        <a href="/articles.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
-          <span>Browse all articles</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
+  <!-- Latest articles -->
+  <section class="max-w-6xl mx-auto px-4 pb-12">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Latest articles</h2>
+        <p class="text-slate-300 mt-1">Latest publications and research articles.</p>
       </div>
-
-      <div id="latestGrid" class="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      <div id="emptyState" class="hidden mt-6 p-5 rounded-2xl bg-slate-900/60 ring-soft text-slate-300">
-        No articles found yet. Add an article from the admin panel or submit a manuscript.
-      </div>
-    </section>
-
-    <!-- Quick links -->
-    <section class="mt-8 grid md:grid-cols-3 gap-4">
-      <a href="/current-issue.html" class="block p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft hover:bg-slate-900 card-hover">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl bg-slate-950/60 ring-soft grid place-items-center"><i class="fa-solid fa-layer-group text-indigo-300"></i></div>
-          <div>
-            <div class="font-semibold">Current Issue</div>
-            <div class="text-sm text-slate-300">Access the newest issue and table of contents.</div>
-          </div>
-        </div>
+      <a href="/articles.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+        <span>All articles</span>
+        <i class="fa-solid fa-arrow-right"></i>
       </a>
-      <a href="/archives.html" class="block p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft hover:bg-slate-900 card-hover">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl bg-slate-950/60 ring-soft grid place-items-center"><i class="fa-solid fa-box-archive text-cyan-300"></i></div>
-          <div>
-            <div class="font-semibold">Archives</div>
-            <div class="text-sm text-slate-300">Browse issues and published volumes.</div>
-          </div>
-        </div>
-      </a>
-      <a href="/contact.html" class="block p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft hover:bg-slate-900 card-hover">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl bg-slate-950/60 ring-soft grid place-items-center"><i class="fa-solid fa-envelope-open-text text-emerald-300"></i></div>
-          <div>
-            <div class="font-semibold">Editorial Office</div>
-            <div class="text-sm text-slate-300">Get in touch regarding submissions or policies.</div>
-          </div>
-        </div>
-      </a>
-    </section>
+    </div>
 
-  </main>
-
+    <div id="latestGrid" class="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <div id="emptyState" class="hidden mt-6 p-5 rounded-2xl bg-slate-900/60 ring-soft text-slate-300">
+      No articles found yet. Add an article from the admin panel or submit a manuscript.
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="border-t border-slate-800/70 bg-slate-950/60 glass">
     <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
       <div>
         <div class="flex items-center gap-2">
-          <img src="https://res.cloudinary.com/dh3heagct/image/upload/v1769007420/uploadsx/file.png" alt="The Global Science logo" class="w-10 h-10 rounded-xl object-contain shadow-soft bg-transparent" loading="lazy" />
+          <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft"></span>
           <div>
             <div class="font-bold" id="footerTitle">The Global Science</div>
             <div class="text-xs text-slate-300" id="footerPublisher">Publisher: Hallaym</div>
@@ -470,7 +316,7 @@
       return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
     function fmtDate(d) {
-      try { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'2-digit' }); }
+      try { return new Date(d).toLocaleDateString('uz-UZ', { year:'numeric', month:'short', day:'2-digit' }); }
       catch { return ''; }
     }
     function articleHref(slug) {
