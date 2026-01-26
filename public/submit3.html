@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Submit Manuscript | The Global Science</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Submit your manuscript to The Global Science Journal via email." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    .glass { backdrop-filter: blur(10px); }
+    .shadow-soft { box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+    .ring-soft { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+<!-- NAV -->
+<header class="sticky top-0 border-b border-slate-800/70 bg-slate-950/70 glass">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 grid place-items-center shadow-soft">
+        <i class="fa-solid fa-journal-whills text-white"></i>
+      </span>
+      <div>
+        <div class="font-bold">The Global Science</div>
+        <div class="text-xs text-slate-300">Manuscript Submission</div>
+      </div>
+    </a>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="max-w-4xl mx-auto px-4 py-14">
+
+  <div class="p-7 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft shadow-soft">
+
+    <h1 class="text-3xl font-extrabold tracking-tight">
+      Submit Your Manuscript
+    </h1>
+
+    <p class="mt-3 text-slate-300 leading-relaxed">
+      The Global Science accepts original research articles, reviews, and short communications.
+      Manuscripts are submitted directly to the editorial office via email.
+    </p>
+
+    <!-- Send Email Button -->
+    <div class="mt-6">
+      <a href="mailto:editor@theglobalscience.org
+      ?subject=Manuscript Submission to The Global Science
+      &body=Dear Editorial Office,%0D%0A%0D%0AI would like to submit my manuscript to The Global Science.%0D%0A%0D%0APlease find my manuscript attached in PDF format.%0D%0A%0D%0ARegards,"
+      class="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-semibold shadow-soft">
+
+        <i class="fa-solid fa-paper-plane"></i>
+        Send Manuscript via Email
+      </a>
+    </div>
+
+    <!-- Guide -->
+    <div class="mt-8 p-5 rounded-2xl bg-slate-950/60 ring-soft">
+      <h2 class="font-semibold text-lg">
+        <i class="fa-solid fa-circle-info mr-2 text-slate-400"></i>
+        Submission Guide
+      </h2>
+
+      <ol class="mt-3 text-sm text-slate-300 list-decimal pl-5 space-y-2">
+        <li>Click the “Send Manuscript via Email” button above.</li>
+        <li>Your email application (Gmail, Outlook, Mail) will open automatically.</li>
+        <li>Attach your manuscript file in PDF format.</li>
+        <li>Write author details (name, affiliation, contact email).</li>
+        <li>Send the email to the editorial office.</li>
+        <li>You will receive a confirmation reply after editorial review.</li>
+      </ol>
+    </div>
+
+    <!-- Journal Info -->
+    <div class="mt-6 text-sm text-slate-400">
+      Editorial Office Email: 
+      <span class="text-slate-200 font-medium">editor@theglobalscience.org</span>
+      <br>
+      Official Website: 
+      <span class="text-slate-200 font-medium">www.theglobalscience.org</span>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800/70 bg-slate-950/60 glass">
+  <div class="max-w-6xl mx-auto px-4 py-6 text-xs text-slate-400">
+    © <span id="year"></span> The Global Science — All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

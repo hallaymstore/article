@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Manuscript | The Global Science</title>
+
+  <meta name="description" content="Submit your manuscript to The Global Science. Provide title, abstract, keywords, and upload PDF. You can also draft an email to the editorial office." />
+  <link rel="icon" href="data:," />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-785NEB4LR5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-785NEB4LR5');
+  </script>
+
+  <style>
+    .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .shadow-soft { box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+    .ring-soft { box-shadow: 0 0 0 1px rgba(148,163,184,.18) inset; }
+    .card-hover { transform: translateY(0); transition: transform .18s ease, box-shadow .18s ease; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 22px 55px rgba(0,0,0,.35); }
+  </style>
+
+  <style id="tgsTheme">
+    html[data-theme="light"] body { background-color: #f8fafc !important; color: #0f172a !important; }
+    html[data-theme="dark"] body  { background-color: #020617 !important; color: #f1f5f9 !important; }
+
+    html[data-theme="light"] .bg-slate-950 { background-color: #f8fafc !important; }
+    html[data-theme="light"] .bg-slate-900\/60 { background-color: rgba(255,255,255,.78) !important; }
+    html[data-theme="light"] .bg-slate-950\/60 { background-color: rgba(255,255,255,.78) !important; }
+    html[data-theme="light"] .bg-slate-950\/50 { background-color: rgba(255,255,255,.68) !important; }
+    html[data-theme="light"] .text-slate-100 { color: #0f172a !important; }
+    html[data-theme="light"] .text-slate-200 { color: #0f172a !important; }
+    html[data-theme="light"] .text-slate-300 { color: #334155 !important; }
+    html[data-theme="light"] .text-slate-400 { color: #475569 !important; }
+    html[data-theme="light"] .border-slate-800\/70,
+    html[data-theme="light"] .border-slate-800 { border-color: rgba(15,23,42,.15) !important; }
+    html[data-theme="light"] .ring-soft { box-shadow: 0 0 0 1px rgba(15,23,42,.12) inset !important; }
+  </style>
+
+  <script>
+    (function () {
+      const KEY = 'tgs_theme';
+      const saved = localStorage.getItem(KEY);
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <!-- Background glow -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-20 blur-3xl bg-indigo-500"></div>
+    <div class="absolute top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-10 blur-3xl bg-cyan-400"></div>
+    <div class="absolute bottom-[-260px] right-[-220px] w-[820px] h-[820px] rounded-full opacity-10 blur-3xl bg-fuchsia-500"></div>
+  </div>
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 border-b border-slate-800/70 bg-slate-950/70 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-soft grid place-items-center">
+          <i class="fa-solid fa-journal-whills text-white"></i>
+        </span>
+        <div class="leading-tight">
+          <div class="font-bold tracking-tight text-slate-100">The Global Science</div>
+          <div class="text-xs text-slate-300 -mt-0.5">Submission Portal</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-1 text-sm">
+        <a href="index.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Home</a>
+        <a href="current-issue.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Current Issue</a>
+        <a href="archives.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Archives</a>
+        <a href="articles.html" class="px-3 py-2 rounded-xl hover:bg-slate-900/60">Articles</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" class="w-10 h-10 grid place-items-center rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" aria-label="Toggle theme" title="Toggle theme">
+          <span id="themeIcon" class="text-sm">☾</span>
+        </button>
+        <button id="logout" class="hidden text-sm px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+          <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+    <section class="grid lg:grid-cols-12 gap-6">
+
+      <!-- Left: Submission form -->
+      <div class="lg:col-span-7">
+        <div class="p-6 md:p-7 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft shadow-soft">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Submit a Manuscript</h1>
+              <p class="mt-2 text-slate-300">
+                Upload your manuscript PDF and metadata. After submission, you can instantly draft an email to the editorial office with all key details.
+              </p>
+            </div>
+            <div class="text-xs text-slate-300 bg-slate-950/60 ring-soft rounded-2xl px-3 py-2">
+              <i class="fa-solid fa-circle-info mr-2 text-slate-400"></i>
+              PDF only · Safe upload · Track status
+            </div>
+          </div>
+
+          <!-- Auth gate -->
+          <div id="authGate" class="mt-5 hidden">
+            <div class="rounded-2xl border border-amber-200/30 bg-amber-500/10 p-4 text-sm text-amber-100">
+              Please <a class="text-indigo-300 underline" href="login.html">login</a> or <a class="text-indigo-300 underline" href="register.html">register</a> to submit a manuscript.
+            </div>
+          </div>
+
+          <form id="form" class="mt-6 space-y-4">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="md:col-span-2">
+                <label class="text-sm font-medium text-slate-200">Title <span class="text-rose-300">*</span></label>
+                <input id="title" required class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Manuscript title" />
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="text-sm font-medium text-slate-200">Abstract</label>
+                <textarea id="abstract" class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600" rows="5" placeholder="Abstract (recommended)"></textarea>
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="text-sm font-medium text-slate-200">Keywords (comma-separated)</label>
+                <input id="keywords" class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="keyword1, keyword2, keyword3" />
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="text-sm font-medium text-slate-200">Cover Letter (optional)</label>
+                <textarea id="cover" class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600" rows="4" placeholder="Short cover letter to the editor"></textarea>
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="text-sm font-medium text-slate-200">Manuscript PDF <span class="text-rose-300">*</span></label>
+                <input id="pdf" type="file" accept="application/pdf" required class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3" />
+                <p class="text-xs text-slate-400 mt-2">
+                  Upload PDF only. Ensure the file name is clear (e.g., <span class="font-medium">Paper_Title.pdf</span>).
+                </p>
+              </div>
+            </div>
+
+            <!-- Email draft options -->
+            <div class="mt-4 p-4 rounded-2xl bg-slate-950/50 ring-soft border border-slate-800/70">
+              <div class="flex items-start justify-between gap-3 flex-wrap">
+                <div>
+                  <div class="font-semibold text-slate-100">
+                    <i class="fa-solid fa-envelope-open-text mr-2 text-slate-400"></i>
+                    Email Draft (Optional)
+                  </div>
+                  <div class="mt-1 text-sm text-slate-300">
+                    After you submit, we can open your email client with a pre-filled message to the editorial office.
+                    Note: email clients cannot attach the PDF automatically; the manuscript is uploaded through this portal.
+                  </div>
+                </div>
+                <div class="text-xs text-slate-400">
+                  Default: <span class="font-semibold" id="editorEmail">editor@theglobalscience.org</span>
+                </div>
+              </div>
+
+              <div class="mt-4 grid md:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-sm text-slate-200 font-medium">To (Editorial Office)</label>
+                  <input id="emailTo" class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3" value="editor@theglobalscience.org" />
+                </div>
+                <div>
+                  <label class="text-sm text-slate-200 font-medium">CC (optional)</label>
+                  <input id="emailCc" class="mt-1 w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3" placeholder="your@email.com" />
+                </div>
+              </div>
+
+              <div class="mt-3 flex items-center gap-3">
+                <label class="inline-flex items-center gap-2 text-sm text-slate-300">
+                  <input id="openEmailAfterSubmit" type="checkbox" class="accent-indigo-500" checked />
+                  Open email draft after successful submission
+                </label>
+              </div>
+
+              <div id="emailDraftBox" class="mt-3 hidden">
+                <div class="text-xs text-slate-400 mb-2">Email preview</div>
+                <pre id="emailPreview" class="whitespace-pre-wrap text-sm rounded-xl bg-slate-950 border border-slate-800 p-4 text-slate-200"></pre>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <button type="button" id="btnOpenEmail" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold text-sm">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>Open Email Draft
+                  </button>
+                  <button type="button" id="btnCopyEmail" class="px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900 font-semibold text-sm">
+                    <i class="fa-solid fa-copy mr-2"></i>Copy Text
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button id="btn" class="w-full px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-semibold">
+              <i class="fa-solid fa-file-arrow-up mr-2"></i>Submit Manuscript
+            </button>
+            <div id="msg" class="text-sm"></div>
+          </form>
+        </div>
+
+        <!-- Help box -->
+        <div class="mt-6 p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+          <div class="font-semibold text-slate-100"><i class="fa-solid fa-circle-question mr-2 text-slate-400"></i>Submission checklist</div>
+          <ul class="mt-3 text-sm text-slate-300 grid gap-2 list-disc pl-5">
+            <li>Use an informative title and include keywords.</li>
+            <li>Make sure your PDF includes author names, affiliations, and references (as required by the journal).</li>
+            <li>Follow the journal format rules in the Author Guidelines.</li>
+            <li>After submission, track status on this page under “My Submissions”.</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="author-guidelines.html" class="px-4 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-sm">Author Guidelines</a>
+            <a href="publication-ethics.html" class="px-4 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-sm">Publication Ethics</a>
+            <a href="contact.html" class="px-4 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900 text-sm">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: My submissions -->
+      <aside class="lg:col-span-5">
+        <div class="p-6 md:p-7 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft shadow-soft">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h2 class="text-2xl font-extrabold tracking-tight">My Submissions</h2>
+              <p class="mt-2 text-slate-300 text-sm">Your submission status updates will appear here.</p>
+            </div>
+            <button id="refresh" class="text-sm px-4 py-2 rounded-xl bg-slate-950/60 ring-soft hover:bg-slate-900">
+              <i class="fa-solid fa-rotate mr-2"></i>Refresh
+            </button>
+          </div>
+
+          <div class="mt-5 grid gap-3" id="list"></div>
+        </div>
+
+        <div class="mt-6 p-5 rounded-3xl bg-slate-900/60 border border-slate-800/70 ring-soft">
+          <div class="font-semibold text-slate-100"><i class="fa-solid fa-shield-check mr-2 text-slate-400"></i>What happens after submission?</div>
+          <ol class="mt-3 text-sm text-slate-300 grid gap-2 list-decimal pl-5">
+            <li>Editorial check (scope, formatting, completeness).</li>
+            <li>Peer review assignment to qualified reviewers.</li>
+            <li>Decision (accept / minor revision / major revision / reject).</li>
+            <li>Final publication in the current issue and archives.</li>
+          </ol>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/70 bg-slate-950/60 glass">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-300 flex flex-wrap items-center justify-between gap-3">
+      <div>© <span id="year"></span> The Global Science</div>
+      <div class="text-xs text-slate-400">This portal uploads manuscripts via the website. Email draft is optional for communication.</div>
+    </div>
+  </footer>
+
+  <script>
+window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-785NEB4LR5');
+</script>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-blue-700"><i class="fa-solid fa-journal-whills mr-2"></i>The Global Science</a>
+      <div class="flex items-center gap-2">
+        <a href="current-issue.html" class="text-sm px-3 py-2 rounded hover:bg-gray-100">Current Issue</a>
+        <a href="archives.html" class="text-sm px-3 py-2 rounded hover:bg-gray-100">Archives</a>
+        <a href="articles.html" class="text-sm px-3 py-2 rounded hover:bg-gray-100">Articles</a>
+        <button id="logout" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-2 gap-6">
+      <section class="bg-white rounded-xl border p-6">
+        <h1 class="text-xl font-bold">Submit a Manuscript</h1>
+        <p class="text-sm text-gray-600 mt-1">Upload your manuscript PDF and metadata. Editorial decisions are handled through the admin panel.</p>
+
+        <div id="authGate" class="mt-4 hidden">
+          <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-900">
+            Please <a class="text-blue-700 underline" href="login.html">login</a> or <a class="text-blue-700 underline" href="register.html">register</a> to submit a manuscript.
+          </div>
+        </div>
+
+        <form id="form" class="mt-6 space-y-4">
+          <div>
+            <label class="text-sm font-medium">Title *</label>
+            <input id="title" required class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="Manuscript title" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Abstract</label>
+            <textarea id="abstract" class="mt-1 w-full border rounded-lg px-3 py-2" rows="5" placeholder="Abstract"></textarea>
+          </div>
+          <div>
+            <label class="text-sm font-medium">Keywords (comma separated)</label>
+            <input id="keywords" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="keyword1, keyword2" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Cover letter (optional)</label>
+            <textarea id="cover" class="mt-1 w-full border rounded-lg px-3 py-2" rows="4" placeholder="Short cover letter"></textarea>
+          </div>
+          <div>
+            <label class="text-sm font-medium">Manuscript PDF *</label>
+            <input id="pdf" type="file" accept="application/pdf" required class="mt-1 w-full border rounded-lg px-3 py-2 bg-white" />
+            <p class="text-xs text-gray-500 mt-1">Only PDF is accepted.</p>
+          </div>
+          <button id="btn" class="w-full px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Submit</button>
+          <div id="msg" class="text-sm"></div>
+        </form>
+      </section>
+
+      <section class="bg-white rounded-xl border p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold">My Submissions</h2>
+            <p class="text-sm text-gray-600">Your submission status updates will appear here.</p>
+          </div>
+          <button id="refresh" class="text-sm px-3 py-2 rounded border border-gray-200 hover:bg-gray-50">Refresh</button>
+        </div>
+        <div id="list" class="mt-4 space-y-3"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const KEY='hsci_token';
+    const token = () => localStorage.getItem(KEY) || '';
+
+    function esc(s){return String(s||'').replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}
+
+    // --- Email draft helpers (optional) ---
+    function buildEmailDraft(meta){
+      const to = (document.getElementById('emailTo')?.value || 'editor@theglobalscience.org').trim() || 'editor@theglobalscience.org';
+      const cc = (document.getElementById('emailCc')?.value || '').trim();
+      const title = meta.title || '(untitled)';
+      const url = meta.siteUrl || window.location.origin;
+      const created = meta.createdAt ? new Date(meta.createdAt).toLocaleString() : new Date().toLocaleString();
+
+      const subject = `New Manuscript Submission: ${title}`;
+
+      const bodyLines = [
+        'Dear Editorial Office,',
+        '',
+        'I have submitted a manuscript via the online submission portal. Below are the submission details:',
+        '',
+        `Journal: The Global Science`,
+        `Website: ${url}`,
+        `Submission time: ${created}`,
+        '',
+        `Title: ${title}`,
+        meta.abstract ? `Abstract: ${meta.abstract}` : 'Abstract: (not provided)',
+        meta.keywords ? `Keywords: ${meta.keywords}` : 'Keywords: (not provided)',
+        meta.coverLetter ? `Cover Letter: ${meta.coverLetter}` : 'Cover Letter: (not provided)',
+        '',
+        meta.submissionId ? `Submission ID: ${meta.submissionId}` : '',
+        meta.pdfUrl ? `Manuscript PDF (portal link): ${meta.pdfUrl}` : 'Manuscript PDF: uploaded in portal',
+        '',
+        'Best regards,'
+      ].filter(Boolean);
+
+      const body = bodyLines.join('\n');
+
+      const mailto = new URL('mailto:' + encodeURIComponent(to));
+      mailto.searchParams.set('subject', subject);
+      mailto.searchParams.set('body', body);
+      if (cc) mailto.searchParams.set('cc', cc);
+
+      return { to, cc, subject, body, href: mailto.toString() };
+    }
+
+    function showEmailDraft(meta){
+      const box = document.getElementById('emailDraftBox');
+      const pre = document.getElementById('emailPreview');
+      if (!box || !pre) return;
+
+      const draft = buildEmailDraft(meta);
+      pre.textContent = `To: ${draft.to}${draft.cc ? `\nCC: ${draft.cc}` : ''}\nSubject: ${draft.subject}\n\n${draft.body}`;
+      box.classList.remove('hidden');
+
+      const btnOpen = document.getElementById('btnOpenEmail');
+      const btnCopy = document.getElementById('btnCopyEmail');
+      if (btnOpen) btnOpen.onclick = () => { window.location.href = draft.href; };
+      if (btnCopy) btnCopy.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(pre.textContent || '');
+          setMsg('Email text copied. You can paste it into any email client.', true);
+        } catch {
+          setMsg('Copy failed. Please select and copy manually.', false);
+        }
+      };
+    }
+[c]));}
+
+    function setMsg(text, ok){
+      const el=document.getElementById('msg');
+      el.textContent=text||'';
+      el.className = ok ? 'text-sm text-green-700' : 'text-sm text-red-700';
+    }
+
+    function gate(){
+      const has = !!token();
+      document.getElementById('authGate').classList.toggle('hidden', has);
+      document.getElementById('form').classList.toggle('hidden', !has);
+      document.getElementById('logout').classList.toggle('hidden', !has);
+    }
+
+    async function loadList(){
+      const root=document.getElementById('list');
+      if(!token()){root.innerHTML='<div class="text-sm text-gray-600">Please log in to view your submissions.</div>';return;}
+      root.innerHTML='<div class="text-sm text-gray-600">Loading...</div>';
+      try{
+        const r=await fetch('/api/author/submissions',{headers:{Authorization:'Bearer '+token()}});
+        const list=await r.json();
+        if(!Array.isArray(list)||!list.length){root.innerHTML='<div class="text-sm text-gray-600">No submissions available yet.</div>';return;}
+        root.innerHTML=list.map(s=>`<div class="rounded-lg border p-3">
+          <div class="flex items-start justify-between gap-3 flex-wrap">
+            <div>
+              <div class="font-semibold">${esc(s.title||'Untitled')}</div>
+              <div class="text-xs text-gray-500">Status: <span class="font-medium">${esc(s.status||'')}</span> | Decision: <span class="font-medium">${esc(s.decision||'pending')}</span></div>
+              ${s.editorNote?`<div class="text-sm text-gray-700 mt-2"><span class="font-medium">Editor note:</span> ${esc(s.editorNote)}</div>`:''}
+            </div>
+            <a class="text-sm px-3 py-2 rounded bg-gray-100 hover:bg-gray-200" href="${esc(s.manuscriptPdfUrl)}" target="_blank" rel="noreferrer">PDF</a>
+          </div>
+        </div>`).join('');
+      }catch(e){
+        root.innerHTML='<div class="text-sm text-gray-700">Failed to load submissions.</div>';
+      }
+    }
+
+    document.getElementById('logout').addEventListener('click',()=>{localStorage.removeItem(KEY); location.href='index.html';});
+    document.getElementById('refresh').addEventListener('click',loadList);
+
+    document.getElementById('form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!token()){return;}
+      setMsg('',true);
+      const f=new FormData();
+      f.append('title', document.getElementById('title').value.trim());
+      f.append('abstract', document.getElementById('abstract').value.trim());
+      f.append('keywords', document.getElementById('keywords').value.trim());
+      f.append('coverLetter', document.getElementById('cover').value.trim());
+      const file=document.getElementById('pdf').files[0];
+      if(!file){setMsg('PDF file is required.',false);return;}
+      f.append('manuscriptPdf', file);
+
+      const btn=document.getElementById('btn');
+      btn.disabled=true;
+      try{
+        const r=await fetch('/api/submissions',{method:'POST',headers:{Authorization:'Bearer '+token()},body:f});
+        const data=await r.json();
+        if(!r.ok) throw new Error(data.error||'Submission failed. Please try again.');
+        setMsg('Manuscript submitted successfully.',true);
+        // Prepare email draft with all metadata
+        const meta = {
+          title: document.getElementById('title').value.trim(),
+          abstract: document.getElementById('abstract').value.trim(),
+          keywords: document.getElementById('keywords').value.trim(),
+          coverLetter: document.getElementById('cover').value.trim(),
+          submissionId: data?._id || data?.id || data?.submissionId || '',
+          pdfUrl: data?.manuscriptPdfUrl || data?.pdfUrl || data?.url || '',
+          createdAt: data?.createdAt || new Date().toISOString(),
+          siteUrl: window.location.origin
+        };
+        showEmailDraft(meta);
+        const openEmail = !!document.getElementById('openEmailAfterSubmit')?.checked;
+        if (openEmail) {
+          const draft = buildEmailDraft(meta);
+          window.location.href = draft.href;
+        }
+
+        document.getElementById('form').reset();
+        await loadList();
+      }catch(err){
+        setMsg(err.message||'Submission failed. Please try again.',false);
+      }finally{btn.disabled=false;}
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    gate();
+    loadList();
+  </script>
+
+  <script>
+    // Theme toggle
+    (function () {
+      const KEY = 'tgs_theme';
+      const btn = document.getElementById('themeToggle');
+      const icon = document.getElementById('themeIcon');
+      function apply(theme){
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        localStorage.setItem(KEY, theme);
+        if (icon) icon.textContent = theme === 'dark' ? '☾' : '☀';
+        if (btn) btn.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+      if (!btn) return;
+      apply(document.documentElement.dataset.theme || 'light');
+      btn.addEventListener('click', function(){
+        const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(t);
+      });
+    })();
+  </script>
+</body>
+</html>

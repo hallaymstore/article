@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel | HALLAYM SCI-Journal</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-785NEB4LR5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-785NEB4LR5');
+</script>
+  <style>
+    body { background: #0b1220; color: #e6e6e6; }
+    .card, .modal-content { background: #0f1a2e; border: 1px solid #1f2a44; }
+    .nav-tabs .nav-link { color: #cbd5e1; border: 1px solid transparent; }
+    .nav-tabs .nav-link.active { color: #fff; background: #0f1a2e; border-color: #1f2a44 #1f2a44 #0f1a2e; }
+    .form-control, .custom-select { background: #0b1220; border: 1px solid #1f2a44; color: #e6e6e6; }
+    .form-control:focus, .custom-select:focus { background: #0b1220; color: #e6e6e6; border-color: #3b82f6; box-shadow: none; }
+    .text-muted { color: #9aa4b2 !important; }
+    .table { color: #e6e6e6; }
+    .table thead th { border-color: #1f2a44; }
+    .table td, .table th { border-color: #1f2a44; }
+    .badge-draft { background: #334155; }
+    .badge-published { background: #166534; }
+    .small-help { font-size: 12px; color: #9aa4b2; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .pointer { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h3 class="mb-0">HALLAYM SCI-Journal - Admin Panel</h3>
+        <div class="text-muted">Maqola, Issue/Volume va ISSN sozlamalari</div>
+      </div>
+      <button id="logoutBtn" class="btn btn-outline-light btn-sm" style="display:none">Logout</button>
+    </div>
+
+    <div id="loginCard" class="card p-4">
+      <h5 class="mb-3">Admin login</h5>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Username</label>
+          <input id="username" class="form-control" autocomplete="username" />
+        </div>
+        <div class="form-group col-md-4">
+          <label>Password</label>
+          <input id="password" type="password" class="form-control" autocomplete="current-password" />
+        </div>
+        <div class="form-group col-md-4 d-flex align-items-end">
+          <button id="loginBtn" class="btn btn-primary btn-block">Login</button>
+        </div>
+      </div>
+      <div id="loginError" class="text-danger small"></div>
+      <div class="small-help mt-2">
+        Eslatma: token localStorage'da saqlanadi. Token eskirsa, avtomatik logout bo'ladi.
+      </div>
+    </div>
+
+    <div id="panel" style="display:none">
+      <ul class="nav nav-tabs mt-4" id="adminTabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="tab-articles" data-toggle="tab" href="#pane-articles" role="tab">Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="tab-issues" data-toggle="tab" href="#pane-issues" role="tab">Issues / Volumes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="tab-settings" data-toggle="tab" href="#pane-settings" role="tab">Journal Settings (ISSN)</a>
+        </li>
+      </ul>
+
+      <div class="tab-content pt-3">
+        <!-- ARTICLES TAB -->
+        <div class="tab-pane fade show active" id="pane-articles" role="tabpanel">
+          <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0">New Article</h5>
+              <a class="btn btn-outline-light btn-sm" href="/articles.html" target="_blank" rel="noopener">Articles page</a>
+            </div>
+            <div class="small-help mb-3">
+              Tip: Issue tanlasangiz, Volume/Issue/Year avtomatik maqolaga biriktiriladi (server issueId bo'yicha oladi).
+            </div>
+
+            <form id="articleForm">
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label>Title</label>
+                  <input id="aTitle" class="form-control" required />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Publication Date</label>
+                  <input id="aPublicationDate" type="date" class="form-control" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label>Issue (Volume/Number/Year)</label>
+                  <select id="aIssueId" class="custom-select">
+                    <option value="">(Issue tanlanmagan)</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Section</label>
+                  <select id="aSection" class="custom-select">
+                    <option>Research Article</option>
+                    <option>Review Article</option>
+                    <option>Short Communication</option>
+                    <option>Case Report</option>
+                    <option>Editorial</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label>Pages</label>
+                  <input id="aPages" class="form-control" placeholder="1-12" />
+                </div>
+                <div class="form-group col-md-3">
+                  <label>License</label>
+                  <input id="aLicense" class="form-control" placeholder="CC BY 4.0" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>DOI</label>
+                  <input id="aDoi" class="form-control" placeholder="10.xxxx/xxxx" />
+                  <div class="small-help">Agar DOI bo'lmasa bo'sh qoldiring.</div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Keywords (comma separated)</label>
+                  <input id="aKeywords" class="form-control" placeholder="AI, Education, Mathematics" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Received At</label>
+                  <input id="aReceivedAt" type="date" class="form-control" />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Accepted At</label>
+                  <input id="aAcceptedAt" type="date" class="form-control" />
+                </div>
+              </div>
+
+              <hr class="border" style="border-color:#1f2a44!important;" />
+
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-2">Authors</h6>
+                <button type="button" id="addAuthorBtn" class="btn btn-sm btn-outline-light">+ Add author</button>
+              </div>
+              <div id="authorsWrap" class="mb-3"></div>
+              <div class="small-help mb-3">Birinchi author serverda <span class="mono">author</span> maydoniga ham yoziladi (backward compatibility).</div>
+
+              <div class="form-group">
+                <label>Abstract</label>
+                <textarea id="aAbstract" class="form-control" rows="3" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Introduction</label>
+                <textarea id="aIntroduction" class="form-control" rows="3" required></textarea>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-2">Body sections</h6>
+                <button type="button" id="addSectionBtn" class="btn btn-sm btn-outline-light">+ Add section</button>
+              </div>
+              <div id="sectionsWrap" class="mb-3"></div>
+
+              <div class="form-group">
+                <label>Conclusion</label>
+                <textarea id="aConclusion" class="form-control" rows="3" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>References (1 satr = 1 reference)</label>
+                <textarea id="aReferences" class="form-control" rows="4" placeholder="1) ...\n2) ..."></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Cover Image</label>
+                  <input id="aCover" type="file" class="form-control" accept="image/*" required />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>PDF file</label>
+                  <input id="aPdf" type="file" class="form-control" accept="application/pdf" required />
+                </div>
+              </div>
+
+              <div class="progress mb-2" style="height:10px;">
+                <div id="uploadProgress" class="progress-bar" role="progressbar" style="width:0%"></div>
+              </div>
+
+              <div class="d-flex">
+                <button id="submitArticleBtn" type="submit" class="btn btn-primary">Upload article</button>
+                <button id="resetArticleBtn" type="button" class="btn btn-outline-light ml-2">Reset</button>
+              </div>
+
+              <div id="articleMsg" class="mt-3"></div>
+            </form>
+          </div>
+        </div>
+
+
+          <div class="card p-4 mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <h5 class="mb-0">Manage Articles</h5>
+                <div class="small-help">Maqolalarni ko‘rish, qidirish va o‘chirish (Cloudinary fayllar ham tozalanadi).</div>
+              </div>
+              <div class="d-flex gap-2" style="gap:8px;">
+                <input id="articleSearch" class="form-control form-control-sm" style="width:240px;" placeholder="Search title/author..." />
+                <button id="refreshArticlesBtn" class="btn btn-outline-light btn-sm" type="button">Refresh</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Published</th>
+                    <th>Issue</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="articlesTbody"></tbody>
+              </table>
+            </div>
+            <div id="articlesMsg" class="small mt-2"></div>
+          </div>
+        <!-- ISSUES TAB -->
+        <div class="tab-pane fade" id="pane-issues" role="tabpanel">
+          <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Issues / Volumes</h5>
+              <button id="newIssueBtn" class="btn btn-outline-light btn-sm" type="button">+ New issue</button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Volume</th>
+                    <th>Issue</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="issuesTbody"></tbody>
+              </table>
+            </div>
+            <div id="issuesMsg" class="small mt-2"></div>
+          </div>
+
+          <div class="modal fade" id="issueModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="issueModalTitle">Issue</h5>
+                  <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input id="issueId" type="hidden" />
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label>Volume</label>
+                      <input id="issueVolume" class="form-control" type="number" min="1" required />
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Issue number</label>
+                      <input id="issueNumber" class="form-control" type="number" min="1" required />
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Year</label>
+                      <input id="issueYear" class="form-control" type="number" min="1900" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Title</label>
+                    <input id="issueTitle" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="issueDescription" class="form-control" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Cover image URL (optional)</label>
+                    <input id="issueCover" class="form-control" placeholder="https://..." />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Status</label>
+                      <select id="issueStatus" class="custom-select">
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Published at (optional)</label>
+                      <input id="issuePublishedAt" type="date" class="form-control" />
+                    </div>
+                  </div>
+                  <div id="issueSaveMsg" class="small"></div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                  <button type="button" id="saveIssueBtn" class="btn btn-primary">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div class="tab-pane fade" id="pane-settings" role="tabpanel">
+          <div class="card p-4">
+            <h5 class="mb-3">Journal settings</h5>
+            <form id="settingsForm">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Journal title</label>
+                  <input id="sJournalTitle" class="form-control" required />
+                </div>
+                <div class="form-group col-md-3">
+                  <label>ISSN (Online)</label>
+                  <input id="sIssnOnline" class="form-control" placeholder="xxxx-xxxx" />
+                </div>
+                <div class="form-group col-md-3">
+                  <label>ISSN (Print)</label>
+                  <input id="sIssnPrint" class="form-control" placeholder="xxxx-xxxx" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label>Publisher</label>
+                  <input id="sPublisher" class="form-control" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Country</label>
+                  <input id="sCountry" class="form-control" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Contact email</label>
+                  <input id="sContactEmail" class="form-control" type="email" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Scope</label>
+                <textarea id="sScope" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Default license</label>
+                <input id="sDefaultLicense" class="form-control" placeholder="CC BY 4.0" />
+              </div>
+              <button id="saveSettingsBtn" type="submit" class="btn btn-primary">Save settings</button>
+              <div id="settingsMsg" class="mt-3"></div>
+              <div class="small-help mt-2">
+                ISSN olish: ISSN raqami odatda Milliy ISSN markazi orqali beriladi. Admin panelda ISSN maydonlari - siz olgan raqamlarni saytda ko'rsatish uchun.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let authToken = null;
+
+    function authHeaders() {
+      return {
+        'Authorization': authToken ? `Bearer ${authToken}` : '',
+        'X-Admin-Token': authToken || ''
+      };
+    }
+
+    function showLogin() {
+      $('#panel').hide();
+      $('#logoutBtn').hide();
+      $('#loginCard').show();
+    }
+
+    function showPanel() {
+      $('#loginCard').hide();
+      $('#panel').show();
+      $('#logoutBtn').show();
+    }
+
+    function hardLogout() {
+      authToken = null;
+      localStorage.removeItem('adminToken');
+      showLogin();
+    }
+
+    async function verifyTokenOrLogout() {
+      if (!authToken) return false;
+      try {
+        const r = await fetch('/api/admin/verify', { headers: authHeaders() });
+        if (!r.ok) throw new Error('verify failed');
+        return true;
+      } catch (e) {
+        hardLogout();
+        return false;
+      }
+    }
+
+    function addAuthorRow(prefill) {
+      const id = 'a' + Date.now() + Math.random().toString(16).slice(2);
+      const a = prefill || { name:'', affiliation:'', orcid:'', email:'' };
+      const row = $(
+        `<div class="card p-3 mb-2" id="author-${id}">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="font-weight-bold">Author</div>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-id="${id}">Remove</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Name</label>
+              <input class="form-control author-name" value="${(a.name||'').replace(/"/g,'&quot;')}" required />
+            </div>
+            <div class="form-group col-md-6">
+              <label>Affiliation</label>
+              <input class="form-control author-aff" value="${(a.affiliation||'').replace(/"/g,'&quot;')}" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>ORCID</label>
+              <input class="form-control author-orcid" value="${(a.orcid||'').replace(/"/g,'&quot;')}" placeholder="0000-0000-0000-0000" />
+            </div>
+            <div class="form-group col-md-8">
+              <label>Email</label>
+              <input class="form-control author-email" type="email" value="${(a.email||'').replace(/"/g,'&quot;')}" />
+            </div>
+          </div>
+        </div>`
+      );
+      row.find('button').on('click', function(){ $('#author-' + $(this).data('id')).remove(); });
+      $('#authorsWrap').append(row);
+    }
+
+    function addSectionRow(prefill) {
+      const id = 's' + Date.now() + Math.random().toString(16).slice(2);
+      const sec = prefill || { heading:'', content:'' };
+      const row = $(
+        `<div class="card p-3 mb-2" id="section-${id}">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="font-weight-bold">Section</div>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-id="${id}">Remove</button>
+          </div>
+          <div class="form-group">
+            <label>Heading</label>
+            <input class="form-control section-heading" value="${(sec.heading||'').replace(/"/g,'&quot;')}" />
+          </div>
+          <div class="form-group mb-0">
+            <label>Content</label>
+            <textarea class="form-control section-content" rows="3">${(sec.content||'')}</textarea>
+          </div>
+        </div>`
+      );
+      row.find('button').on('click', function(){ $('#section-' + $(this).data('id')).remove(); });
+      $('#sectionsWrap').append(row);
+    }
+
+    async function loadSettings() {
+      const r = await fetch('/api/journal/settings');
+      const s = await r.json().catch(() => ({}));
+      $('#sJournalTitle').val(s.journalTitle || '');
+      $('#sIssnOnline').val(s.issnOnline || '');
+      $('#sIssnPrint').val(s.issnPrint || '');
+      $('#sPublisher').val(s.publisher || '');
+      $('#sCountry').val(s.country || '');
+      $('#sContactEmail').val(s.contactEmail || '');
+      $('#sScope').val(s.scope || '');
+      $('#sDefaultLicense').val(s.defaultLicense || 'CC BY 4.0');
+      // default license for article form
+      if (!$('#aLicense').val()) $('#aLicense').val(s.defaultLicense || 'CC BY 4.0');
+    }
+
+    async function loadIssuesForAdmin() {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      const r = await fetch('/api/admin/issues', { headers: authHeaders() });
+      const issues = await r.json().catch(() => []);
+      // dropdown
+      const sel = $('#aIssueId');
+      sel.empty();
+      sel.append('<option value="">(Issue tanlanmagan)</option>');
+      (Array.isArray(issues) ? issues : []).forEach(i => {
+        const label = `Vol.${i.volume} No.${i.number} (${i.year})${i.status === 'published' ? ' - published' : ''}`;
+        sel.append(`<option value="${i._id}">${label}</option>`);
+      });
+      // table
+      const tb = $('#issuesTbody');
+      tb.empty();
+      (Array.isArray(issues) ? issues : []).forEach(i => {
+        const badge = i.status === 'published'
+          ? '<span class="badge badge-published">published</span>'
+          : '<span class="badge badge-draft">draft</span>';
+        const tr = $(
+          `<tr>
+            <td>${i.volume}</td>
+            <td>${i.number}</td>
+            <td>${i.year}</td>
+            <td>${(i.title || '').toString().slice(0,60)}</td>
+            <td>${badge}</td>
+            <td class="text-right">
+              <button class="btn btn-sm btn-outline-light mr-1" data-act="edit">Edit</button>
+              <button class="btn btn-sm btn-outline-danger" data-act="del">Delete</button>
+            </td>
+          </tr>`
+        );
+        tr.find('button[data-act="edit"]').on('click', () => openIssueModal(i));
+        tr.find('button[data-act="del"]').on('click', () => deleteIssue(i));
+        tb.append(tr);
+      });
+    }
+
+    function openIssueModal(issue) {
+      const i = issue || {};
+      $('#issueModalTitle').text(i._id ? 'Edit issue' : 'New issue');
+      $('#issueId').val(i._id || '');
+      $('#issueVolume').val(i.volume || '');
+      $('#issueNumber').val(i.number || '');
+      $('#issueYear').val(i.year || new Date().getFullYear());
+      $('#issueTitle').val(i.title || '');
+      $('#issueDescription').val(i.description || '');
+      $('#issueCover').val(i.coverImage || '');
+      $('#issueStatus').val(i.status || 'draft');
+      $('#issuePublishedAt').val(i.publishedAt ? new Date(i.publishedAt).toISOString().slice(0,10) : '');
+      $('#issueSaveMsg').text('');
+      $('#issueModal').modal('show');
+    }
+
+    async function saveIssue() {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      const id = $('#issueId').val().trim();
+      const payload = {
+        volume: $('#issueVolume').val(),
+        number: $('#issueNumber').val(),
+        year: $('#issueYear').val(),
+        title: $('#issueTitle').val(),
+        description: $('#issueDescription').val(),
+        coverImage: $('#issueCover').val(),
+        status: $('#issueStatus').val(),
+        publishedAt: $('#issuePublishedAt').val()
+      };
+      const url = id ? `/api/admin/issues/${id}` : '/api/admin/issues';
+      const method = id ? 'PUT' : 'POST';
+      $('#issueSaveMsg').removeClass('text-danger text-success').text('Saving...');
+      const r = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
+        body: JSON.stringify(payload)
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        $('#issueSaveMsg').addClass('text-danger').text(d.error || 'Save failed');
+        return;
+      }
+      $('#issueSaveMsg').addClass('text-success').text('Saved');
+      $('#issueModal').modal('hide');
+      await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
+    }
+
+    async function deleteIssue(issue) {
+      if (!issue || !issue._id) return;
+      if (!confirm(`Delete Vol.${issue.volume} No.${issue.number} (${issue.year}) ?`)) return;
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      $('#issuesMsg').removeClass('text-danger text-success').text('Deleting...');
+      const r = await fetch(`/api/admin/issues/${issue._id}`, { method: 'DELETE', headers: authHeaders() });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        $('#issuesMsg').addClass('text-danger').text(d.error || 'Delete failed');
+        return;
+      }
+      $('#issuesMsg').addClass('text-success').text('Deleted');
+      await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
+    }
+
+    async function saveSettings() {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      $('#settingsMsg').removeClass('text-danger text-success').text('Saving...');
+      const payload = {
+        journalTitle: $('#sJournalTitle').val(),
+        issnOnline: $('#sIssnOnline').val(),
+        issnPrint: $('#sIssnPrint').val(),
+        publisher: $('#sPublisher').val(),
+        scope: $('#sScope').val(),
+        country: $('#sCountry').val(),
+        contactEmail: $('#sContactEmail').val(),
+        defaultLicense: $('#sDefaultLicense').val()
+      };
+      const r = await fetch('/api/admin/journal/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
+        body: JSON.stringify(payload)
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        $('#settingsMsg').addClass('text-danger').text(d.error || 'Save failed');
+        return;
+      }
+      $('#settingsMsg').addClass('text-success').text('Saved');
+      // update defaults
+      if (!$('#aLicense').val()) $('#aLicense').val(d.defaultLicense || 'CC BY 4.0');
+    }
+
+    async function uploadArticle() {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+
+      const cover = $('#aCover')[0].files[0];
+      const pdf = $('#aPdf')[0].files[0];
+      if (!cover || !pdf) {
+        $('#articleMsg').addClass('text-danger').text('Cover image va PDF majburiy.');
+        return;
+      }
+
+      // authors
+      const authors = [];
+      $('#authorsWrap .card').each(function(){
+        const name = $(this).find('.author-name').val().trim();
+        const affiliation = $(this).find('.author-aff').val().trim();
+        const orcid = $(this).find('.author-orcid').val().trim();
+        const email = $(this).find('.author-email').val().trim();
+        if (name) authors.push({ name, affiliation, orcid, email });
+      });
+      if (!authors.length) {
+        $('#articleMsg').addClass('text-danger').text('Kamida 1 ta author kiriting.');
+        return;
+      }
+
+      // sections
+      const body = [];
+      $('#sectionsWrap .card').each(function(){
+        const heading = $(this).find('.section-heading').val();
+        const content = $(this).find('.section-content').val();
+        if ((heading && heading.trim()) || (content && content.trim())) {
+          body.push({ heading: heading || '', content: content || '' });
+        }
+      });
+      if (!body.length) body.push({ heading: '', content: '' });
+
+      const refs = ($('#aReferences').val() || '').split('\n').map(s => s.trim()).filter(Boolean);
+
+      const formData = new FormData();
+      formData.append('title', $('#aTitle').val().trim());
+      // server schema requires author; keep backward compat
+      formData.append('author', (authors[0].name || '').trim());
+      formData.append('publicationDate', $('#aPublicationDate').val());
+      formData.append('abstract', $('#aAbstract').val());
+      formData.append('introduction', $('#aIntroduction').val());
+      formData.append('conclusion', $('#aConclusion').val());
+      formData.append('body', JSON.stringify(body));
+      formData.append('references', JSON.stringify(refs));
+
+      const issueId = $('#aIssueId').val();
+      if (issueId) formData.append('issueId', issueId);
+
+      const doi = $('#aDoi').val().trim();
+      if (doi) formData.append('doi', doi);
+
+      const license = $('#aLicense').val().trim();
+      if (license) formData.append('license', license);
+
+      const keywords = ($('#aKeywords').val() || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (keywords.length) formData.append('keywords', JSON.stringify(keywords));
+
+      formData.append('authors', JSON.stringify(authors));
+
+      const receivedAt = $('#aReceivedAt').val();
+      const acceptedAt = $('#aAcceptedAt').val();
+      if (receivedAt) formData.append('receivedAt', receivedAt);
+      if (acceptedAt) formData.append('acceptedAt', acceptedAt);
+
+      const pages = $('#aPages').val().trim();
+      if (pages) formData.append('pages', pages);
+
+      const section = $('#aSection').val();
+      if (section) formData.append('section', section);
+
+      formData.append('coverImage', cover);
+      formData.append('pdfFile', pdf);
+
+      $('#submitArticleBtn').prop('disabled', true).text('Uploading...');
+      $('#articleMsg').removeClass('text-danger text-success').text('Uploading...');
+      $('#uploadProgress').css('width', '5%');
+
+      $.ajax({
+        url: '/api/admin/articles',
+        method: 'POST',
+        headers: authHeaders(),
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function() {
+          const xhr = new window.XMLHttpRequest();
+          xhr.upload.addEventListener('progress', function(evt) {
+            if (evt.lengthComputable) {
+              const pct = Math.round((evt.loaded / evt.total) * 100);
+              $('#uploadProgress').css('width', pct + '%');
+            }
+          });
+          return xhr;
+        }
+      }).done(function(resp) {
+        $('#submitArticleBtn').prop('disabled', false).text('Upload article');
+        $('#uploadProgress').css('width', '100%');
+        const slug = resp?.article?.slug || resp?.slug;
+        const link = slug ? `<a href="/article.html?slug=${encodeURIComponent(slug)}" target="_blank" rel="noopener">Open article</a>` : '';
+        $('#articleMsg').addClass('text-success').html(`Saved. ${link}`);
+        // refresh sitemap is server side
+      }).fail(function(xhr) {
+        $('#submitArticleBtn').prop('disabled', false).text('Upload article');
+        const d = xhr.responseJSON || {};
+        if (xhr.status === 401 || xhr.status === 403) {
+          hardLogout();
+          return;
+        }
+        $('#articleMsg').addClass('text-danger').text(d.error || `Upload failed (${xhr.status})`);
+        $('#uploadProgress').css('width', '0%');
+      });
+    }
+
+    function resetArticleForm() {
+      $('#articleForm')[0].reset();
+      $('#authorsWrap').empty();
+      $('#sectionsWrap').empty();
+      addAuthorRow();
+      addSectionRow();
+      const today = new Date().toISOString().slice(0,10);
+      $('#aPublicationDate').val(today);
+      $('#uploadProgress').css('width', '0%');
+      $('#articleMsg').removeClass('text-danger text-success').text('');
+    }
+
+    $(document).ready(async function(){
+      // prefill
+      const today = new Date().toISOString().slice(0,10);
+      $('#aPublicationDate').val(today);
+      addAuthorRow();
+      addSectionRow();
+
+      // restore token
+      const saved = localStorage.getItem('adminToken');
+      if (saved) authToken = saved;
+
+      // events
+      $('#loginBtn').on('click', async function(){
+        $('#loginError').text('');
+        const username = $('#username').val().trim();
+        const password = $('#password').val();
+        try {
+          const r = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+          const d = await r.json().catch(() => ({}));
+          if (!r.ok) {
+            $('#loginError').text(d.error || 'Login failed');
+            return;
+          }
+          authToken = d.token;
+          localStorage.setItem('adminToken', authToken);
+          showPanel();
+          await loadSettings();
+          await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
+        } catch (e) {
+          $('#loginError').text('Server bilan ulanishda xatolik');
+        }
+      });
+
+      $('#logoutBtn').on('click', hardLogout);
+      $('#addAuthorBtn').on('click', () => addAuthorRow());
+      $('#addSectionBtn').on('click', () => addSectionRow());
+      $('#resetArticleBtn').on('click', resetArticleForm);
+      $('#articleForm').on('submit', function(e){ e.preventDefault(); uploadArticle(); });
+
+      $('#newIssueBtn').on('click', () => openIssueModal(null));
+      $('#saveIssueBtn').on('click', saveIssue);
+
+      $('#settingsForm').on('submit', function(e){ e.preventDefault(); saveSettings(); });
+
+      // initial
+      const verified = await verifyTokenOrLogout();
+      if (authToken && verified) {
+        showPanel();
+        await loadSettings();
+        await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
+      } else {
+        showLogin();
+        await loadSettings(); // public
+      }
+    });
+  
+    // ---- Articles list (admin)
+    async function loadArticlesForAdmin() {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      $('#articlesMsg').removeClass('text-danger text-success').text('Loading...');
+      const q = ($('#articleSearch').val() || '').trim();
+      const url = q ? `/api/admin/articles?q=${encodeURIComponent(q)}` : '/api/admin/articles';
+      try {
+        const r = await fetch(url, { headers: authHeaders() });
+        const d = await r.json().catch(() => ([]));
+        if (!r.ok) {
+          $('#articlesMsg').addClass('text-danger').text(d.error || 'Failed to load');
+          return;
+        }
+        const rows = (Array.isArray(d) ? d : []).map(a => {
+          const pub = a.publicationDate ? new Date(a.publicationDate).toISOString().slice(0,10) : '';
+          const issue = (a.volume && a.issue && a.year) ? `V${a.volume} / I${a.issue} / ${a.year}` : (a.year ? String(a.year) : '—');
+          const open = `<a class="btn btn-sm btn-outline-light" href="/article.html?slug=${encodeURIComponent(a.slug)}" target="_blank" rel="noopener">Open</a>`;
+          const pdf = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/pdf" target="_blank" rel="noopener">PDF</a>`;
+          const orig = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/pdf?original=1" target="_blank" rel="noopener">Original</a>`;
+          const del = `<button class="btn btn-sm btn-outline-danger" data-del="${a._id}" data-title="${(a.title||'').replace(/"/g,'&quot;')}">Delete</button>`;
+          return `<tr>
+            <td style="min-width:260px;"><div class="font-weight-bold">${(a.title||'')}</div><div class="text-muted small">${(a.doi||'')}</div></td>
+            <td style="min-width:140px;">${(a.author||'')}</td>
+            <td>${pub}</td>
+            <td>${issue}</td>
+            <td class="text-right" style="white-space:nowrap;">${open} ${pdf} ${orig} ${del}</td>
+          </tr>`;
+        }).join('');
+        $('#articlesTbody').html(rows || `<tr><td colspan="5" class="text-muted">No articles</td></tr>`);
+        $('#articlesMsg').addClass('text-success').text(`Loaded: ${(Array.isArray(d)?d.length:0)}`);
+        // bind delete buttons
+        $('#articlesTbody button[data-del]').off('click').on('click', async function(){
+          const id = $(this).data('del');
+          const title = $(this).data('title') || '';
+          if (!confirm(`Delete this article?\n\n${title}\n\nThis will also remove Cloudinary files (best-effort).`)) return;
+          await deleteArticleById(id);
+        });
+      } catch (e) {
+        $('#articlesMsg').addClass('text-danger').text('Network error');
+      }
+    }
+
+    async function deleteArticleById(id) {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      $('#articlesMsg').removeClass('text-danger text-success').text('Deleting...');
+      try {
+        const r = await fetch(`/api/admin/articles/${encodeURIComponent(id)}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          $('#articlesMsg').addClass('text-danger').text(d.error || 'Delete failed');
+          return;
+        }
+        $('#articlesMsg').addClass('text-success').text('Deleted');
+        await loadArticlesForAdmin();
+      } catch {
+        $('#articlesMsg').addClass('text-danger').text('Network error');
+      }
+    }
+</script>
+</body>
+</html>

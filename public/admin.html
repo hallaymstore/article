@@ -30,13 +30,22 @@
     .small-help { font-size: 12px; color: #9aa4b2; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     .pointer { cursor: pointer; }
+  
+    .accent-bar { height: 8px; border-radius: 999px; background: linear-gradient(90deg, #3b82f6, #a855f7); box-shadow: 0 10px 30px rgba(59,130,246,.18); margin-bottom: 14px; }
+    .brand-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(59,130,246,.35); background: rgba(59,130,246,.10); color:#dbeafe; font-weight:700; font-size:12px; }
+    .btn-primary { background: linear-gradient(90deg, #3b82f6, #a855f7); border: none; }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-outline-light { border-color: rgba(226,232,240,.35); }
+    .card-title { letter-spacing: .2px; }
+
   </style>
 </head>
 <body>
   <div class="container py-4">
+    <div class="accent-bar"></div>
     <div class="d-flex align-items-center justify-content-between mb-3">
       <div>
-        <h3 class="mb-0">HALLAYM SCI-Journal - Admin Panel</h3>
+        <h3 class="mb-0">The Global Science - Admin Panel</h3>
         <div class="text-muted">Maqola, Issue/Volume va ISSN sozlamalari</div>
       </div>
       <button id="logoutBtn" class="btn btn-outline-light btn-sm" style="display:none">Logout</button>
@@ -210,6 +219,35 @@
           </div>
         </div>
 
+
+          <div class="card p-4 mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <h5 class="mb-0">Manage Articles</h5>
+                <div class="small-help">Maqolalarni ko‘rish, qidirish va o‘chirish (Cloudinary fayllar ham tozalanadi).</div>
+              </div>
+              <div class="d-flex gap-2" style="gap:8px;">
+                <input id="articleSearch" class="form-control form-control-sm" style="width:240px;" placeholder="Search title/author..." />
+                <button id="refreshArticlesBtn" class="btn btn-outline-light btn-sm" type="button">Refresh</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Published</th>
+                    <th>Issue</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="articlesTbody"></tbody>
+              </table>
+            </div>
+            <div id="articlesMsg" class="small mt-2"></div>
+          </div>
         <!-- ISSUES TAB -->
         <div class="tab-pane fade" id="pane-issues" role="tabpanel">
           <div class="card p-4">
@@ -550,6 +588,7 @@
       $('#issueSaveMsg').addClass('text-success').text('Saved');
       $('#issueModal').modal('hide');
       await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
     }
 
     async function deleteIssue(issue) {
@@ -566,6 +605,7 @@
       }
       $('#issuesMsg').addClass('text-success').text('Deleted');
       await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
     }
 
     async function saveSettings() {
@@ -758,6 +798,7 @@
           showPanel();
           await loadSettings();
           await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
         } catch (e) {
           $('#loginError').text('Server bilan ulanishda xatolik');
         }
@@ -780,11 +821,76 @@
         showPanel();
         await loadSettings();
         await loadIssuesForAdmin();
+          await loadArticlesForAdmin();
       } else {
         showLogin();
         await loadSettings(); // public
       }
     });
-  </script>
+  
+    // ---- Articles list (admin)
+    async function loadArticlesForAdmin() {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      $('#articlesMsg').removeClass('text-danger text-success').text('Loading...');
+      const q = ($('#articleSearch').val() || '').trim();
+      const url = q ? `/api/admin/articles?q=${encodeURIComponent(q)}` : '/api/admin/articles';
+      try {
+        const r = await fetch(url, { headers: authHeaders() });
+        const d = await r.json().catch(() => ([]));
+        if (!r.ok) {
+          $('#articlesMsg').addClass('text-danger').text(d.error || 'Failed to load');
+          return;
+        }
+        const rows = (Array.isArray(d) ? d : []).map(a => {
+          const pub = a.publicationDate ? new Date(a.publicationDate).toISOString().slice(0,10) : '';
+          const issue = (a.volume && a.issue && a.year) ? `V${a.volume} / I${a.issue} / ${a.year}` : (a.year ? String(a.year) : '—');
+          const open = `<a class="btn btn-sm btn-outline-light" href="/article.html?slug=${encodeURIComponent(a.slug)}" target="_blank" rel="noopener">Open</a>`;
+          const pdf = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/pdf" target="_blank" rel="noopener">PDF</a>`;
+          const orig = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/pdf?original=1" target="_blank" rel="noopener">Original</a>`;
+          const del = `<button class="btn btn-sm btn-outline-danger" data-del="${a._id}" data-title="${(a.title||'').replace(/"/g,'&quot;')}">Delete</button>`;
+          return `<tr>
+            <td style="min-width:260px;"><div class="font-weight-bold">${(a.title||'')}</div><div class="text-muted small">${(a.doi||'')}</div></td>
+            <td style="min-width:140px;">${(a.author||'')}</td>
+            <td>${pub}</td>
+            <td>${issue}</td>
+            <td class="text-right" style="white-space:nowrap;">${open} ${pdf} ${orig} ${del}</td>
+          </tr>`;
+        }).join('');
+        $('#articlesTbody').html(rows || `<tr><td colspan="5" class="text-muted">No articles</td></tr>`);
+        $('#articlesMsg').addClass('text-success').text(`Loaded: ${(Array.isArray(d)?d.length:0)}`);
+        // bind delete buttons
+        $('#articlesTbody button[data-del]').off('click').on('click', async function(){
+          const id = $(this).data('del');
+          const title = $(this).data('title') || '';
+          if (!confirm(`Delete this article?\n\n${title}\n\nThis will also remove Cloudinary files (best-effort).`)) return;
+          await deleteArticleById(id);
+        });
+      } catch (e) {
+        $('#articlesMsg').addClass('text-danger').text('Network error');
+      }
+    }
+
+    async function deleteArticleById(id) {
+      const ok = await verifyTokenOrLogout();
+      if (!ok) return;
+      $('#articlesMsg').removeClass('text-danger text-success').text('Deleting...');
+      try {
+        const r = await fetch(`/api/admin/articles/${encodeURIComponent(id)}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          $('#articlesMsg').addClass('text-danger').text(d.error || 'Delete failed');
+          return;
+        }
+        $('#articlesMsg').addClass('text-success').text('Deleted');
+        await loadArticlesForAdmin();
+      } catch {
+        $('#articlesMsg').addClass('text-danger').text('Network error');
+      }
+    }
+</script>
 </body>
 </html>
