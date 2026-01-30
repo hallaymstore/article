@@ -848,13 +848,14 @@
           const open = `<a class="btn btn-sm btn-outline-light" href="/article.html?slug=${encodeURIComponent(a.slug)}" target="_blank" rel="noopener">Open</a>`;
           const pdf = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/pdf" target="_blank" rel="noopener">PDF</a>`;
           const orig = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/pdf?original=1" target="_blank" rel="noopener">Original</a>`;
+          const cert = `<a class="btn btn-sm btn-outline-light" href="/api/articles/${encodeURIComponent(a.slug)}/certificate.pdf" target="_blank" rel="noopener">Certificate</a>`;
           const del = `<button class="btn btn-sm btn-outline-danger" data-del="${a._id}" data-title="${(a.title||'').replace(/"/g,'&quot;')}">Delete</button>`;
           return `<tr>
             <td style="min-width:260px;"><div class="font-weight-bold">${(a.title||'')}</div><div class="text-muted small">${(a.doi||'')}</div></td>
             <td style="min-width:140px;">${(a.author||'')}</td>
             <td>${pub}</td>
             <td>${issue}</td>
-            <td class="text-right" style="white-space:nowrap;">${open} ${pdf} ${orig} ${del}</td>
+            <td class="text-right" style="white-space:nowrap;">${open} ${pdf} ${orig} ${cert} ${del}</td>
           </tr>`;
         }).join('');
         $('#articlesTbody').html(rows || `<tr><td colspan="5" class="text-muted">No articles</td></tr>`);

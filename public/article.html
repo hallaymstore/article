@@ -162,7 +162,16 @@
               <i class="fa-regular fa-file-pdf"></i>
               Download PDF
             </a>
-            <button id="btnCite" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
+            
+            <a id="btnPdfCert" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold" href="#" title="PDF + certificates at the end">
+              <i class="fa-solid fa-file-circle-check"></i>
+              PDF + Certificates
+            </a>
+            <a id="btnCertAll" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" href="#" title="All certificates (one page per author)">
+              <i class="fa-solid fa-award"></i>
+              Certificates
+            </a>
+<button id="btnCite" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900">
               <i class="fa-solid fa-quote-right"></i>
               Cite
             </button>
@@ -185,6 +194,18 @@
             <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">References</div>
             <ol id="references" class="mt-3"></ol>
           </div>
+
+<div class="mt-8 p-4 rounded-2xl bg-slate-950/50 ring-soft">
+  <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Certificates</div>
+  <div class="mt-3 flex flex-wrap gap-2">
+    <a id="btnCertAllBottom" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 ring-soft hover:bg-slate-900" href="#">
+      <i class="fa-solid fa-award"></i>
+      Download all certificates
+    </a>
+    <div id="certList" class="flex flex-wrap gap-2"></div>
+  </div>
+  <div class="mt-2 text-xs text-slate-400">If the article has multiple authors, each author gets a separate certificate page.</div>
+</div>
         </article>
 
         <aside class="lg:col-span-4 grid gap-4">
@@ -514,7 +535,8 @@
       const certUrl = `/api/articles/${encodeURIComponent(article.slug)}/certificate.pdf`;
       const pdfWithCert = `${pdfBase}?certificate=1`;
       if ($('btnPdfCert')) $('btnPdfCert').href = pdfWithCert;
-      if ($('btnCert')) $('btnCert').href = certUrl;
+      if ($('btnCertAll')) $('btnCertAll').href = `${certUrl}?all=1`;
+      if ($('btnCertAllBottom')) $('btnCertAllBottom').href = `${certUrl}?all=1`;
 
       // Cite
       const cite = makeCite(settings, article);

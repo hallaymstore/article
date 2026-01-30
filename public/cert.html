@@ -1,0 +1,311 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Certificate</title>
+
+  <!-- CDN font (agar server internetga chiqsa) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @page { size: A4 landscape; margin: 0; }
+
+    :root{
+      --ink:#0b1220;
+      --muted:#53657a;
+      --gold:#c9a227;
+      --blue:#0b3d91;
+      --paper:#ffffff;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; background:#fff;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+    }
+
+    /* Outer */
+    .page{
+      width: 297mm; height: 210mm;
+      padding: 16mm;
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    /* Modern border */
+    .frame{
+      position:absolute; inset: 12mm;
+      border: 1px solid rgba(11,61,145,.25);
+      border-radius: 14px;
+      pointer-events:none;
+    }
+    .frame::before{
+      content:"";
+      position:absolute; inset: 6mm;
+      border: 2px solid rgba(201,162,39,.35);
+      border-radius: 12px;
+    }
+
+    /* Watermark logo (transparent) */
+    .watermark{
+      position:absolute;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity: .06;
+      pointer-events:none;
+      transform: rotate(-8deg);
+    }
+    .watermark img{ width: 520px; max-width: 70%; filter: saturate(1.05); }
+
+    /* Header bar */
+    .top{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom: 10mm;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .brand img{ width: 64px; height:64px; object-fit:contain; }
+    .brand .name{
+      font-weight:800; letter-spacing:.2px; line-height:1.1;
+    }
+    .brand .name .sub{ font-weight:600; color:var(--muted); font-size: 12px; }
+
+    .badge{
+      padding: 10px 14px;
+      border: 1px solid rgba(11,61,145,.25);
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--blue);
+      background: linear-gradient(180deg, rgba(11,61,145,.08), rgba(11,61,145,.02));
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+    }
+
+    /* Title */
+    .title{
+      text-align:center;
+      margin: 0 0 6mm;
+    }
+    .title h1{
+      margin:0;
+      font-family: "Playfair Display", serif;
+      font-size: 46px;
+      letter-spacing:.4px;
+    }
+    .title .desc{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Recipient block */
+    .recipient{
+      text-align:center;
+      margin: 8mm 0 8mm;
+    }
+    .recipient .label{
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+    .recipient .person{
+      margin: 6px 0 0;
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .recipient .meta{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Info grid (ko‘proq ma’lumotlar) */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 6mm;
+    }
+    .card{
+      border: 1px solid rgba(11,61,145,.18);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(11,61,145,.04), rgba(201,162,39,.02));
+      min-height: 54px;
+    }
+    .card .k{
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 6px;
+    }
+    .card .v{
+      font-weight: 700;
+      font-size: 14px;
+      line-height:1.25;
+    }
+    .card .v small{ font-weight:600; color: var(--muted); }
+
+    /* Bottom: stamps and signatures */
+    .bottom{
+      position:absolute;
+      left: 16mm; right: 16mm; bottom: 16mm;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 18px;
+    }
+
+    .stampBox{
+      display:flex;
+      align-items:flex-end;
+      gap: 14px;
+    }
+    .stamp{
+      width: 150px;
+      opacity: .95;
+      transform: rotate(-8deg);
+    }
+    .stampNote{
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.3;
+      max-width: 260px;
+    }
+
+    .signBox{
+      text-align:right;
+      min-width: 330px;
+    }
+    .sigImg{
+      width: 260px;
+      margin-left:auto;
+      opacity: .92;
+    }
+    .sigLine{
+      margin-top: 8px;
+      border-top: 1px solid rgba(11,61,145,.3);
+      padding-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .sigLine strong{ color: var(--ink); }
+    .verify{
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .verify code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(11,61,145,.06);
+      border: 1px solid rgba(11,61,145,.14);
+      color: var(--blue);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="watermark">
+      <img src="{{LOGO_URL}}" alt="logo watermark">
+    </div>
+
+    <div class="frame"></div>
+
+    <div class="top">
+      <div class="brand">
+        <img src="{{LOGO_URL}}" alt="logo">
+        <div class="name">
+          The Global Science
+          <div class="sub">International Journal • Research & Innovation</div>
+        </div>
+      </div>
+
+      <div class="badge">Official Certificate</div>
+    </div>
+
+    <div class="title">
+      <h1>Certificate of Publication</h1>
+      <div class="desc">
+        This certificate confirms that the following work has been reviewed and officially published to the journal archive.
+      </div>
+    </div>
+
+    <div class="recipient">
+      <div class="label">Presented to</div>
+      <div class="person">{{RECIPIENT_NAME}}</div>
+      <div class="meta">
+        For the successful publication of an academic article in <b>The Global Science</b>.
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="k">Article Title</div>
+        <div class="v">{{ARTICLE_TITLE}}</div>
+      </div>
+
+      <div class="card">
+        <div class="k">DOI</div>
+        <div class="v">{{DOI}} <small>(if applicable)</small></div>
+      </div>
+
+      <div class="card">
+        <div class="k">Publication Date</div>
+        <div class="v">{{PUBLISHED_AT}}</div>
+      </div>
+
+      <div class="card">
+        <div class="k">Journal / Issue</div>
+        <div class="v">{{JOURNAL_NAME}} — Vol. {{VOLUME}}, No. {{ISSUE}}</div>
+      </div>
+
+      <div class="card">
+        <div class="k">Certificate ID</div>
+        <div class="v">{{CERT_ID}}</div>
+      </div>
+
+      <div class="card">
+        <div class="k">Verification</div>
+        <div class="v">Verify online: <small>{{VERIFY_URL}}</small></div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="stampBox">
+        <img class="stamp" src="{{STAMP_URL}}" alt="stamp">
+        <div class="stampNote">
+          Official stamp & journal seal<br/>
+          <b>Publisher:</b> The Global Science<br/>
+          <b>Website:</b> {{SITE_URL}}
+        </div>
+      </div>
+
+      <div class="signBox">
+        <img class="sigImg" src="{{SIGNATURE_URL}}" alt="signature">
+        <div class="sigLine">
+          <strong>{{SIGNATORY_NAME}}</strong><br/>
+          {{SIGNATORY_TITLE}}
+        </div>
+        <div class="verify">
+          Certificate code: <code>{{CERT_ID}}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
