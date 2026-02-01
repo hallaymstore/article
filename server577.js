@@ -53,7 +53,7 @@ const apiLimiter = rateLimit({
 app.use('/api/', apiLimiter);
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://abumafia0:abumafia0@abumafia.h1trttg.mongodb.net/sci12?appName=abumafia');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://abumafia0:abumafia0@abumafia.h1trttg.mongodb.net/sci1?appName=abumafia');
 
 // MongoDB Schemas & Models
 // YANGI schema:
